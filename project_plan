@@ -1,0 +1,39 @@
+(login - adminUser - adminFormUser) Ayman, Alaa
+(userhome - admin home) Nouran
+(adminproduct - adminformProduct) KHALED
+(AdminOrders - userOrder adminChecks) -> NASSER, MOSTAFA
+________________________________________________________________________________________________________________________________________________________________________________________
+
+USER [🔐️id, name, email, password, image, role, 🔑️room_id] --> Ayman
+ORDER [🔐️id, total_amount, notes, status, date, total_quantity, 🔑️user_id] --> Nasser
+ORDER_ITEM [🔐️id, quantity, price, 🔑️order_id , 🔑️product_id] --> Mostafa
+PROUCT [🔐️id, price, image, name, isAvaliable, 🔑️cat_id] --> Khaled
+CATEGORY [🔐️id, name] Alaa
+ROOM [🔐️id, room_number, isBusy] --> Nouran
+(Tommorow @ 10 p.m.)
+_________________________________________________________________________________________________________________________________________________________________________________________
+File Structure
+_________________________________________________________________________________________________________________________________________________________________________________________
+
+assets -> 	
+	  images
+	  js
+	  css
+
+controller ->
+		user_controller.php
+
+views ->
+		user_view.php
+
+model -> 
+		user_model.php
+
+helper -> 
+	  base.php
+	  validation.php
+	  
+.env (config)
+
+function and class name convention:
+https://tastyigniter.com/docs/php-coding-guidelines
