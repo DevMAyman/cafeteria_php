@@ -25,10 +25,22 @@
             <div class="form-group">
                 <label for="category">Category:</label>
                 <select class="form-control" id="category" name="category_id" required>
-                    <option value="1">Category 1</option>
-                    <option value="2">Category 2</option>
-                    <option value="3">Category 3</option>
+                    <?php
+                    require_once '../../helper/db_connection.php';
+                    require_once '../../model/category_model.php';
+
+                    $db = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
+                    $db->connectToDatabase();
+                    $conn = $db->getPdo();
+
+                    $categories = Category::get_all_categories($conn);
+
+                    foreach ($categories as $category) {
+                        echo '<option value="' . $category['id'] . '">' . $category['name'] . '</option>';
+                    }
+                    ?>
                 </select>
+                <a href="./add_category.php" class="btn btn-sm btn-secondary ml-2">Add Category</a>
             </div>
             <div class="form-group">
                 <label for="image">Image:</label>

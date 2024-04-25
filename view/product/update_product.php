@@ -16,6 +16,7 @@
         <?php
         include_once '../../model/product_model.php';
         include_once '../../helper/db_connection.php';
+        include_once '../../model/category_model.php';
 
 
         $conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
@@ -26,6 +27,8 @@
             $id = $_GET['id'];
             $productData = Product::get_product_by_id($conn->getPdo(), $id);
         }
+        $categories = Category::get_all_categories($conn->getPdo());
+
         ?>
         <form action="../../controller/product_controller.php?action=update" method="post" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?php echo $productData['id']; ?>">
@@ -41,10 +44,13 @@
             <div class="form-group">
                 <label for="category">Category:</label>
                 <select class="form-control" id="category" name="category_id" required>
-                    <option value="1" <?php if ($productData['category_id'] == 1) echo 'selected'; ?>>Category 1</option>
-                    <option value="2" <?php if ($productData['category_id'] == 2) echo 'selected'; ?>>Category 2</option>
-                    <option value="3" <?php if ($productData['category_id'] == 3) echo 'selected'; ?>>Category 3</option>
+                    <?php foreach ($categories as $category) : ?>
+                        <option value="<?php echo $category['id']; ?>" <?php if ($productData['category_id'] == $category['id']) echo 'selected'; ?>>
+                            <?php echo $category['name']; ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
+                <a href="../../view/category/add_category.php" class="btn btn-sm btn-secondary ml-2">Add Category</a>
             </div>
             <div class="form-group">
                 <label for="image">Image:</label>
