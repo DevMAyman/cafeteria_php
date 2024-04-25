@@ -25,8 +25,8 @@ class Database {
         }
     }
 
-    // public function getPdo() {
-    //     return $this->pdo;
-    // }
+    public function getPdo() {
+        return $this->pdo;
+    }
 }
 ?>

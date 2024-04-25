@@ -7,7 +7,8 @@ class OrderItem {
     private $order_id;
     private $product_id;
     
-    public function __construct($quantity, $price, $order_id , $product_id) {
+    public function __construct($id,$quantity, $price, $order_id , $product_id) {
+        $this->id = $id;
         $this->quantity = $quantity;
         $this->price = $price;
         $this->order_id = $order_id;
