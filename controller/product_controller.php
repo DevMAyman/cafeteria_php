@@ -1,6 +1,6 @@
 <?php
 
-include_once '../helper/connect_to_db.php';
+include_once '../helper/db_connection.php';
 include_once '../model/Product_model.php';
 
 class ProductController
@@ -10,7 +10,8 @@ class ProductController
 
     public function __construct()
     {
-        $this->conn = connect_to_db();
+        $this->conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
+        $this->conn->connectToDatabase();
     }
 
     public function uploadImage($file)

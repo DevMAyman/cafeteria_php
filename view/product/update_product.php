@@ -15,13 +15,16 @@
         <h2>Update Product</h2>
         <?php
         include_once '../../model/product_model.php';
-        include_once '../../helper/connect_to_db.php';
+        include_once '../../helper/db_connection.php';
 
-        $conn = connect_to_db();
+
+        $conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
+        $conn->connectToDatabase();
+        $products = Product::get_all_Products($conn->getPdo());
 
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
-            $productData = Product::get_product_by_id($conn, $id);
+            $productData = Product::get_product_by_id($conn->getPdo(), $id);
         }
         ?>
         <form action="../../controller/product_controller.php?action=update" method="post" enctype="multipart/form-data">

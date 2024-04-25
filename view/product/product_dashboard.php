@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Dashboard</title>
     <?php include_once '../../helper/base.php'; ?>
-    <?php include_once '../../helper/connect_to_db.php'; ?>
+    <?php include_once '../../helper/db_connection.php'; ?>
     <link href="styles.css?<?php echo time(); ?>" rel="stylesheet">
 
 </head>
@@ -28,10 +28,13 @@
             <tbody>
                 <?php
                 require_once '../../model/product_model.php';
-                require_once '../../helper/connect_to_db.php';
+                require_once '../../helper/db_connection.php';
 
-                $conn = connect_to_db();
-                $products = Product::get_all_Products($conn);
+
+                $conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
+                $conn->connectToDatabase();
+
+                $products = Product::get_all_Products($conn->getPdo());
 
                 foreach ($products as $product) {
                     echo "<tr>";

@@ -6,7 +6,7 @@ echo '
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
 
-echo "<div class='container fs-4'> <pre>";
+echo "<div class='container fs-4'> <div>";
 ?>
 <?php
 echo '<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">';
