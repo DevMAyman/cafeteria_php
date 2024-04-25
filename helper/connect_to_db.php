@@ -3,17 +3,16 @@
 function connect_to_db()
 {
     $host = 'localhost';
-    $dbname = 'cafeteria';  // Replace with your database name
-    $username = 'root';  // Replace with your database username
-    $password = '';  // Replace with your database password
+    $dbname = 'cafeteria';
+    $username = 'root';
+    $password = '';
 
     try {
         $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-        // Set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $conn;
     } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
+        echo "<h3 style='color:red'>Connection failed: " . $e->getMessage() . "</h3>";
         exit();
     }
 }

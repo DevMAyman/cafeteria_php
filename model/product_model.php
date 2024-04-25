@@ -76,13 +76,13 @@ class Product
 
     // CRUD operations
 
-    public static function getAllProducts($conn)
+    public static function get_all_Products($conn)
     {
         $stmt = $conn->query("SELECT * FROM products");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function getProductById($conn, $id)
+    public static function get_product_by_id($conn, $id)
     {
         $stmt = $conn->prepare("SELECT * FROM products WHERE id = :id");
         $stmt->bindParam(':id', $id);
@@ -90,7 +90,7 @@ class Product
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function save($conn)
+    public function insert_product($conn)
     {
         $stmt = $conn->prepare("INSERT INTO products (name, price, image, isAvailable, category_id) VALUES (:name, :price, :image, :isAvailable, :category_id)");
         $stmt->bindParam(':name', $this->name);
@@ -102,7 +102,7 @@ class Product
         $this->id = $conn->lastInsertId();
     }
 
-    public function update($conn)
+    public function update_product($conn)
     {
         $stmt = $conn->prepare("UPDATE products SET name = :name, price = :price, image = :image, isAvailable = :isAvailable, category_id = :category_id WHERE id = :id");
         $stmt->bindParam(':name', $this->name);
@@ -114,7 +114,7 @@ class Product
         $stmt->execute();
     }
 
-    public static function delete($conn, $id)
+    public static function delete_product($conn, $id)
     {
         $stmt = $conn->prepare("DELETE FROM products WHERE id = :id");
         $stmt->bindParam(':id', $id);

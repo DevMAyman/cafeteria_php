@@ -7,6 +7,8 @@
     <title>Product Dashboard</title>
     <?php include_once '../../helper/base.php'; ?>
     <?php include_once '../../helper/connect_to_db.php'; ?>
+    <link href="styles.css?<?php echo time(); ?>" rel="stylesheet">
+
 </head>
 
 <body>
@@ -29,16 +31,16 @@
                 require_once '../../helper/connect_to_db.php';
 
                 $conn = connect_to_db();
-                $products = Product::getAllProducts($conn);
+                $products = Product::get_all_Products($conn);
 
                 foreach ($products as $product) {
                     echo "<tr>";
                     echo "<td>{$product['name']}</td>";
-                    echo "<td><img src='../assets/{$product['image']}' alt='{$product['name']}' class='product-image'></td>";
-                    echo "<td>{$product['price']}</td>";
+                    echo "<td><img src='../../assets/{$product['image']}' alt='{$product['name']}' class='product-image'></td>";
+                    echo "<td>{$product['price']}$</td>";
                     echo "<td>
-                            <a href='update_product.php?id={$product['id']}' class='btn btn-primary'>Update</a>
-                            <a href='product_controller.php?action=delete&id={$product['id']}' class='btn btn-danger' onclick='return confirm(\"Are you sure you want to delete this product?\");'>Delete</a>
+                    <a href='update_product.php?id={$product['id']}' class='btn btn-primary'>Update</a>
+                    <a href='../../controller/product_controller.php?action=delete&id={$product['id']}' class='btn btn-danger' onclick='return confirm(\"Are you sure you want to delete this product?\");'>Delete</a>
                           </td>";
                     echo "</tr>";
                 }

@@ -13,7 +13,7 @@
 
     <div class="container mt-5 center-form">
         <h2>Add Product</h2>
-        <form action="../../controller/product_controller.php" method="post" enctype="multipart/form-data">
+        <form action="../../controller/product_controller.php?action=insert" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" class="form-control" id="name" name="name" required>
