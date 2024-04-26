@@ -73,9 +73,5 @@ class Product
     {
         $this->categoryId = $categoryId;
     }
-    public function select($table) {
-        $sql = "SELECT * FROM {$table}";
-        $stmt = $this->pdo->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+
 }
