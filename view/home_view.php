@@ -3,11 +3,8 @@ require_once "../helper/db_connection _copy.php";
 require_once "../model/product_model.php";
 require '../config.php';
 
-require_once "../model/order_manager.php";
 
 
-
-// Display products
 function display_in_table($rows) {
   echo <<<HTML
 <!DOCTYPE html>
@@ -89,34 +86,31 @@ HTML;
 
 for ($i = 0; $i < count($rows); $i += 2) {
   echo "<tr class='row'>";
-  
+
+  // Display the first product
   $row1 = $rows[$i];
   $name1 = $row1['name'];
   $price1 = $row1['price'];
   $image1 = $row1['image'];
-  $productId1 = $row1['id']; 
-  
+
   echo '<td class="col-md-4">
-  <form method="GET">
-      <input type="hidden" name="product_id" value="' . $productId1 . '">
-              <div class="cardcontainer">
-                  <div class="photo">
-                      <button type="submit" style="border: none; background: none; padding: 0; margin: 0;">
-                          <img src="' . $image1 . '" />
-                      </button>
-                      <div class="type2">Cold</div>
-                  </div>
-                  <div class="content">
-                      <p class="txt4">' . $name1 . '</p>
-                  </div>
-                  <div class="footer">
-                      <p class="txt3 price">Price: <i class="fas fa-dollar-sign"></i>' . $price1 . '</p>
-                  </div>
-              </div>
-          </form>
+          <div class="cardcontainer">
+          <div class="photo">
+          <a href="#"><img src="' . $image1 . '" /></a>
+            <div class="type2">Cold</div>
+          </div>
+            <div class="content">
+              <p class="txt4">' . $name1 . '</p>
+            </div>
+            <div class="footer">
+              <p class="txt3 price">Price: <i class="fas fa-dollar-sign"></i>' . $price1 . '</p>
+            </div>
+          </div>
         </td>';
 
+  // Check if there's another product to display
   if ($i + 1 < count($rows)) {
+      // Display the second product
       $row2 = $rows[$i + 1];
       $name2 = $row2['name'];
       $price2 = $row2['price'];
@@ -319,25 +313,10 @@ echo <<<HTML
 </body>
 </html>
 HTML;
-  }
+}
 $db = new Database(host, dbname, username, password, port);
 $conn = $db->connectToDatabase(); 
 
 $rows = $db->select("products");
 display_in_table($rows); 
-
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["product_id"])) {
-  $productId = $_GET["product_id"];
-  
-  $orderManager = new OrderManager($conn);
-    $orderId = $orderManager->addProductToOrder($productId);
-  
-  if ($orderId !== false) {
-      echo "Product added to order. Order ID: " . $orderId;
-  } else {
-      echo "Failed to add product to order.";
-  }
-} else {
-  echo "Invalid request.";
-}
 ?>
