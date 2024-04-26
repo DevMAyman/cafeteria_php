@@ -3,6 +3,7 @@ session_start();
 
 require_once('../helper/validation.php');
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = array();
     $formData = array();

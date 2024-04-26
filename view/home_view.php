@@ -1,3 +1,15 @@
+<?php
+ 
+require_once('../helper/check_admin.php');
+
+session_start();
+$isAdmin = isAdmin();
+ 
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -38,6 +50,20 @@
   </head>
 
   <body>
+
+
+  <?php
+    
+    if ($isAdmin) {
+        include('admin_navbar.php');
+    } else {
+        include('user_navbar.php');
+    }
+    ?>
+
+
+
+
     <!-- ______________________________slider_________________________________-->
     <div class="div1">
       <div class="split-slideshow">
