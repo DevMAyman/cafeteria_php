@@ -9,15 +9,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $formData = array();
     
     // Validate email and password
-    foreach ($_POST as $key => $value) {
-        if ($value == '') {
+   foreach ($_POST as $key => $value) {
+       if ($value == '') {
             $errors[$key] = "$key is required.";
         }
         if ($key == 'email' && $value != "" && !Validation::validateEmail($value)) {
             $errors[$key] = "$key is not valid.";
-        }
+       }
         if ($key == 'password' && $value != "" && !Validation::validateStringLength($value, 8)) {
-            $errors[$key] = "$key must be at least 8 characters long.";
+           $errors[$key] = "$key must be at least 8 characters long.";
         }
 
         $formData[$key] = $value;
@@ -47,11 +47,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $statement->fetch(PDO::FETCH_ASSOC);
         
         if ($user) {
-            // User exists, redirect to home page or wherever you want
+            
             header("Location: ../view/home_view.php");
             exit;
         } else {
-            // User doesn't exist or password is incorrect, display error
+        
             $errors['login'] = "Invalid email or password.";
             $_SESSION['errors'] = $errors;
             $_SESSION['formData'] = $formData;

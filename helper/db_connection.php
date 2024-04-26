@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config.php';
+require '../config.php';
 
 class Database
 {
@@ -39,4 +40,6 @@ class Database
     {
         return $this->pdo;
     }
+
+    
 }
