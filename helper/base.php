@@ -6,5 +6,10 @@ echo '
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
 
-echo "<div class='container fs-4'> <pre>";
+echo "<div class='container fs-4'> <div>";
 ?>
+<?php
+echo '<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">';
+echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>';
+echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>';
+echo '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>';

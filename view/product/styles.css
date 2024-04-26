@@ -1,0 +1,30 @@
+.center-form {
+  margin-top: 30px;
+  border: 1px solid black;
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-control {
+  width: 100%;
+}
+.product-image {
+  max-width: 400px;
+  max-height: 150px;
+  object-fit: contain;
+}
+
+table {
+  width: 100%;
+}
+
+table th,
+table td {
+  text-align: center;
+}
+.delete-icon:hover {
+  opacity: 0.7;
+}

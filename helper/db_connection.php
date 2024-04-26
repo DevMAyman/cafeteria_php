@@ -1,21 +1,24 @@
 <?php
-require '../config.php';
+require_once __DIR__ . '/../config.php';
 
-class Database {
+class Database
+{
     private $host;
     private $dbname;
     private $username;
     private $password;
     private $pdo;
 
-    public function __construct($host, $dbname, $username, $password) {
+    public function __construct($host, $dbname, $username, $password)
+    {
         $this->host = $host;
         $this->dbname = $dbname;
         $this->username = $username;
         $this->password = $password;
     }
 
-    public function connectToDatabase() {
+    public function connectToDatabase()
+    {
         try {
             $dsn = "mysql:host={$this->host};dbname={$this->dbname};charset=utf8mb4";
             $this->pdo = new PDO($dsn, $this->username, $this->password);
@@ -24,9 +27,16 @@ class Database {
             die("Connection failed: " . $e->getMessage());
         }
     }
-
-    public function getPdo() {
+    public function prepare($sql)
+    {
+        return $this->pdo->prepare($sql);
+    }
+    public function lastInsertId()
+    {
+        return $this->pdo->lastInsertId();
+    }
+    public function getPdo()
+    {
         return $this->pdo;
     }
 }
-?>
