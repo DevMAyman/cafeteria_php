@@ -8,6 +8,7 @@
     <?php include_once '../../helper/base.php'; ?>
     <?php include_once '../../helper/db_connection.php'; ?>
     <link href="styles.css?<?php echo time(); ?>" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
 
@@ -42,8 +43,8 @@
                     echo "<td><img src='../../assets/{$product['image']}' alt='{$product['name']}' class='product-image'></td>";
                     echo "<td>{$product['price']}$</td>";
                     echo "<td>
-                    <a href='update_product.php?id={$product['id']}' class='btn btn-primary'>Update</a>
-                    <a href='../../controller/product_controller.php?action=delete&id={$product['id']}' class='btn btn-danger' onclick='return confirm(\"Are you sure you want to delete this product?\");'>Delete</a>
+                    <a href='update_product.php?id={$product['id']}' ><i class='fas fa-edit'></i></a>
+                    <a href='../../controller/product_controller.php?action=delete&id={$product['id']}' class='delete-icon' '><i class='fas fa-trash-alt' style='color: red;'></i></a>
                           </td>";
                     echo "</tr>";
                 }
