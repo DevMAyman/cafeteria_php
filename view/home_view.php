@@ -1,5 +1,5 @@
 <?php 
-require_once "../helper/db_connection.php";
+require_once "../helper/db_connection _copy.php";
 require_once "../model/product_model.php";
 require '../config.php';
 
@@ -95,15 +95,15 @@ for ($i = 0; $i < count($rows); $i += 2) {
 
   echo '<td class="col-md-4">
           <div class="cardcontainer">
-            <div class="photo">
-              <img src="' . $image1 . '" />
-              <div class="type2">Cold</div>
-            </div>
+          <div class="photo">
+          <a href="#"><img src="' . $image1 . '" /></a>
+            <div class="type2">Cold</div>
+          </div>
             <div class="content">
               <p class="txt4">' . $name1 . '</p>
             </div>
             <div class="footer">
-              <p class="txt3">Price: <i class="fas fa-dollar-sign"></i>' . $price1 . '</p>
+              <p class="txt3 price">Price: <i class="fas fa-dollar-sign"></i>' . $price1 . '</p>
             </div>
           </div>
         </td>';
@@ -119,14 +119,14 @@ for ($i = 0; $i < count($rows); $i += 2) {
       echo '<td class="col-md-4">
               <div class="cardcontainer">
                 <div class="photo">
-                  <img src="' . $image2 . '" />
+                <a href="#"><img src="' . $image2 . '" /></a>
                   <div class="type2">Cold</div>
                 </div>
                 <div class="content">
                   <p class="txt4">' . $name2 . '</p>
                 </div>
                 <div class="footer">
-                  <p class="txt3">Price: <i class="fas fa-dollar-sign"></i>' . $price2 . '</p>
+                  <p class="txt3 price">Price: <i class="fas fa-dollar-sign"></i>' . $price2 . '</p>
                 </div>
               </div>
             </td>';

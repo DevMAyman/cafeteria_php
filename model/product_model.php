@@ -73,5 +73,4 @@ class Product
     {
         $this->categoryId = $categoryId;
     }
-
 }
