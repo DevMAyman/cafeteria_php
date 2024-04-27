@@ -1,7 +1,3 @@
-<?php 
-require_once "../helper/db_connection.php";
-require_once "../model/product_model.php";
-require '../config.php';
 
 
 
@@ -322,4 +318,4 @@ try {
 } catch (Exception $e) {
   var_dump($e->getMessage());
 }
-?>
+
