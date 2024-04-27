@@ -24,9 +24,10 @@ class RoomController
                 $isBusy = isset($_POST['is_busy']) ? true : false;
 
                 $room = new Room($roomNumber, $roomName, $isBusy);
-                var_dump($this->conn);
-                $room->insert_room($this->conn);
-                header("Location: ../view/room/room_dashboard.php");
+                $isInserted=$room->insert_room($this->conn);
+
+
+ 
                 exit;
             } elseif (isset($_GET['action']) && $_GET['action'] == 'update') {
                 try {

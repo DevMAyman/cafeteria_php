@@ -70,14 +70,17 @@ class Room {
                 $stmt->bindParam(':is_busy', $this->isBusy);
                 $stmt->execute();
                 $this->id = $conn->lastInsertId();
+                header("Location: ../view/room/room_dashboard.php");
+
             } else {
-                echo "Room with the same name already exists.";
+                echo '<img style ="width:300px;height:300px;margin-left: 460px;" src="https://cdn-icons-png.flaticon.com/512/5841/5841032.png"/>';
+                echo "<h1 style='color: rgb(255,87,87);margin-top: 50px;margin-left: 370px;'> Room with the same name already exists. </h1>";
+
             }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
     }
-    
     public function update_room($conn) {
         try {
             // Check if the room with the same name already exists
