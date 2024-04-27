@@ -1,11 +1,12 @@
 <?php
 
 class Database {
-    protected $conn;
+    public $conn;
 
     public function __construct() {
-        $config = require('config.php');
-
+        $config = require('../config.php');
+        echo("asdas");
+        var_dump ($config);
         $dsn = "mysql:host={$config['host']};dbname={$config['database']}";
         try {
             $this->conn = new PDO($dsn, $config['username'], $config['password']);
@@ -25,5 +26,4 @@ class Database {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
-
 ?>

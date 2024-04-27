@@ -1,90 +1,123 @@
 <?php
-require_once('../helper/database.php');
-require_once('Cloudinary.php');
+// require_once('../helper/db_connection.php');
+// require_once('Cloudinary.php');
 
-class UserModel extends Database {
-    public function createUser($name, $email, $password, $role, $imagePath) {
-        $name = htmlspecialchars(strip_tags($name));
-        $email = htmlspecialchars(strip_tags($email));
-        $password = password_hash($password, PASSWORD_DEFAULT); // Hash the password
-        $role = htmlspecialchars(strip_tags($role));
-        
-        $cloudinary = new Cloudinary();
-        $imageURL = $cloudinary->uploadImage($imagePath);
-
-        $sql = "INSERT INTO users (name, email, password, role, image_url) VALUES (:name, :email, :password, :role, :imageURL)";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
-        $stmt->bindParam(':role', $role);
-        $stmt->bindParam(':imageURL', $imageURL);
-
-        try {
-            $stmt->execute();
-            return true; 
+class UserModel  {
+     public static function createUserTable(){
+         try {
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=myusers;charset=utf8', 'root', 'mysql@123');
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
         } catch (PDOException $e) {
-            return false; 
+            die("Connection failed: " . $e->getMessage());
+        }
+        try {
+            $sql = "CREATE TABLE IF NOT EXISTS myusers.users (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                email VARCHAR(255) NOT NULL UNIQUE,
+                password VARCHAR(255) NOT NULL,
+                room_no VARCHAR(50) NOT NULL,
+                ext VARCHAR(50),
+                profile_picture VARCHAR(255),
+                role ENUM('client', 'admin') NOT NULL DEFAULT 'client'
+            )";
+            $pdo->exec($sql);
+            echo "Table created successfully!";
+        } catch (PDOException $e) {
+            die("Error creating user table: " . $e->getMessage());
+        }
+        $pdo = null;
+    }
+    public static function createUser($name, $email, $password, $room_no, $ext, $profile_picture, $role) {
+        try {
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=myusers;charset=utf8', 'root', 'mysql@123');
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $pdo->prepare("INSERT INTO users (name, email, password, room_no, ext, profile_picture, role) VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+            $stmt->bindParam(1, $name);
+            $stmt->bindParam(2, $email);
+            $stmt->bindParam(3, $hashed_password);
+            $stmt->bindParam(4, $room_no);
+            $stmt->bindParam(5, $ext);
+            $stmt->bindParam(6, $profile_picture);
+            $stmt->bindParam(7, $role);
+
+            $stmt->execute();
+
+            $pdo = null;
+
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error creating user: " . $e->getMessage());
+            return false;
         }
     }
 
-    public function getUserById($id) {
-        $id = (int)$id;
+    public static function  get_all_users() {
+    try {
+        try {
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=myusers;charset=utf8', 'root', 'mysql@123');
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
+        } catch (PDOException $e) {
+            die("Connection failed: " . $e->getMessage());
+        }
 
-        $sql = "SELECT * FROM users WHERE id = :id";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':id', $id);
+        $stmt = $pdo->prepare("SELECT * FROM users");
+
         $stmt->execute();
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $user ? $user : null;
-    }
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $pdo = null;
 
-    public function updateUser($id, $name, $email, $role, $imagePath = null) {
-        $id = (int)$id;
-        $name = htmlspecialchars(strip_tags($name));
-        $email = htmlspecialchars(strip_tags($email));
-        $role = htmlspecialchars(strip_tags($role));
-
-        if ($imagePath) {
-            $cloudinary = new Cloudinary();
-            $imageURL = $cloudinary->uploadImage($imagePath);
-            $sql = "UPDATE users SET name=:name, email=:email, role=:role, image_url=:imageURL WHERE id=:id";
-        } else {
-            $sql = "UPDATE users SET name=:name, email=:email, role=:role WHERE id=:id";
-        }
-
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':role', $role);
-        $stmt->bindParam(':id', $id);
-        if ($imagePath) {
-            $stmt->bindParam(':imageURL', $imageURL);
-        }
-
-        try {
-            $stmt->execute();
-            return true; 
-        } catch (PDOException $e) {
-            return false; 
-        }
-    }
-
-    public function deleteUser($id) {
-        $id = (int)$id;
-
-        $sql = "DELETE FROM users WHERE id = :id";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':id', $id);
-
-        try {
-            $stmt->execute();
-            return true; 
-        } catch (PDOException $e) {
-            return false; 
-        }
+        return $users;
+    } catch (PDOException $e) {
+        die("Error retrieving users: " . $e->getMessage());
     }
 }
+
+    public static function delete_user($user_id) {
+    try {
+         try {
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=myusers;charset=utf8', 'root', 'mysql@123');
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
+        } catch (PDOException $e) {
+            die("Connection failed: " . $e->getMessage());
+        }
+
+        $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+
+        $stmt->bindParam(1, $user_id);
+
+        $stmt->execute();
+        
+        $pdo = null;
+    } catch (PDOException $e) {
+        trigger_error("Error deleting user: " . $e->getMessage());
+    }
+}
+
+  public static function get_user_by_id($user_id) {
+    try {
+        $pdo = new PDO('mysql:host=127.0.0.1;dbname=myusers;charset=utf8', 'root', 'mysql@123');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
+    } catch (PDOException $e) {
+        die("Connection failed: " . $e->getMessage());
+    }
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE id = :user_id');
+
+    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $pdo = null;
+
+    return $user ? $user : false;
+}
+
+}
+
+
 
 ?>

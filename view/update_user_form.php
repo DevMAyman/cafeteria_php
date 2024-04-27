@@ -1,21 +1,13 @@
 <?php
-session_start();
+require('../model/user_model.php');
 
-if(isset($_SESSION['errors']) && isset($_SESSION['formData'])) {
-    $errors = $_SESSION['errors'];
-    $formData = $_SESSION['formData'];
+if(isset($_POST['user_id'])) {
+    $user_id = $_POST['user_id'];
 
-    foreach($errors as $key => $error) {
-        echo "<p>Error in $key: $error</p>";
-    }
+    $user = UserModel::get_user_by_id($user_id);
 
-    foreach($formData as $key => $value) {
-        echo "<p>$key: $value</p>";
-    }
+    if($user) {
 
-    unset($_SESSION['errors']);
-    unset($_SESSION['formData']);
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +37,7 @@ if(isset($_SESSION['errors']) && isset($_SESSION['formData'])) {
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div data-mdb-input-init class="form-outline flex-fill mb-0">
                       <label class="form-label" for="name">Your Name</label>
-                      <input type="text" id="name" class="form-control" name="name" value="<?php echo isset($formData['name']) ? $formData['name'] : ''; ?>"/>
+                      <input type="text" id="name" class="form-control" name="name" value="<?php echo $user['name']; ?>"/>
                       <span class="error-message" style="color:red;"><?php echo isset($errors['name']) ? $errors['name'] : ''; ?></span>
                     </div>
                   </div>
@@ -54,7 +46,7 @@ if(isset($_SESSION['errors']) && isset($_SESSION['formData'])) {
                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div data-mdb-input-init class="form-outline flex-fill mb-0">
                       <label class="form-label" for="email">Your Email</label>
-                      <input type="text" id="email" class="form-control" name="email" value="<?php echo isset($formData['email']) ? $formData['email'] : ''; ?>"/>
+                      <input type="text" id="email" class="form-control" name="email" value="<?php echo $user['email']; ?>"/>
                       <span class="error-message" style="color:red;"><?php echo isset($errors['email']) ? $errors['email'] : ''; ?></span>
                     </div>
                   </div>
@@ -127,3 +119,13 @@ if(isset($_SESSION['errors']) && isset($_SESSION['formData'])) {
 </section>    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
+<?php
+    } else {
+        // User not found
+        echo "User not found.";
+    }
+} else {
+    // User ID not set
+    echo "User ID not provided.";
+}
+?>
