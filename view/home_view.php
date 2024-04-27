@@ -60,10 +60,7 @@ function display_in_table($rows) {
   <link rel="stylesheet" href="../styles/home_style.css" />
 </head>
 
-<body>
-
- 
-
+<body style="overflow-x:hidden">
   <!-- ______________________________slider_________________________________-->
   <div class="div1">
     <div class="split-slideshow">
