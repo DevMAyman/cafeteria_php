@@ -314,9 +314,12 @@ echo <<<HTML
 </html>
 HTML;
 }
-$db = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
-$conn = $db->connectToDatabase(); 
-
-$rows = $db->select("products2");
-display_in_table($rows); 
+try {
+  $conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
+  $conn->connectToDatabase();
+  $rows = Product::get_all_Products($conn->getPdo());
+  display_in_table($rows);
+} catch (Exception $e) {
+  var_dump($e->getMessage());
+}
 ?>

@@ -39,4 +39,10 @@ class Database
     {
         return $this->pdo;
     }
+
+    public function select($table) {
+        $sql = "SELECT * FROM {$table}";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

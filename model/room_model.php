@@ -95,11 +95,16 @@ class Room {
                 $stmt->bindParam(':is_busy', $this->isBusy);
                 $stmt->bindParam(':id', $this->id);
                 $stmt->execute();
+                
+                // Return a success message or indication
+                return "Room updated successfully";
             } else {
-                echo "Room with the same name already exists.";
+                // Room with the same name already exists
+                return "Room with the same name already exists.";
             }
         } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            // Handle database errors
+            return "Error: " . $e->getMessage();
         }
     }
     

@@ -26,7 +26,6 @@
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             $roomData = Room::get_room_by_id($conn->getPdo(), $id);
-            // Check if room data exists
             if ($roomData) {
         ?>
         <form action="../../controller/room_controller.php?action=update" method="post" enctype="multipart/form-data">
