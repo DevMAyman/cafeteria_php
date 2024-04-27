@@ -4,8 +4,22 @@ require_once "../model/product_model.php";
 require '../config.php';
 
 
+ //for navbar
+//require_once('../helper/check_admin.php');
+
+//session_start();
+//$isAdmin = isAdmin();
+ 
+
 
 function display_in_table($rows) {
+
+  //if ($isAdmin) {
+    //include('admin_navbar.php');
+//} else {
+  // include('user_navbar.php');
+//}
+
   echo <<<HTML
 <!DOCTYPE html>
 <html lang="en">

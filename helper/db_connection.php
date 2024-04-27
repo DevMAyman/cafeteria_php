@@ -7,7 +7,7 @@ class Database
     private $dbname;
     private $username;
     private $password;
-    private $pdo;
+    public $pdo;
 
     public function __construct($host, $dbname, $username, $password)
     {
@@ -23,6 +23,8 @@ class Database
             $dsn = "mysql:host={$this->host};dbname={$this->dbname};charset=utf8mb4";
             $this->pdo = new PDO($dsn, $this->username, $this->password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $this->pdo;
+
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
         }

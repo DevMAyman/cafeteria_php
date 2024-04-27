@@ -1,22 +1,20 @@
 <?php
 session_start();
 
-if(isset($_SESSION['errors']) && isset($_SESSION['formData'])) {
+if (isset($_SESSION['errors']) && isset($_SESSION['formData'])) {
     $errors = $_SESSION['errors'];
     $formData = $_SESSION['formData'];
 
-    foreach($errors as $key => $error) {
-        echo "<p>Error in $key: $error</p>";
-    }
+     
+   
 
-    foreach($formData as $key => $value) {
-        echo "<p>$key: $value</p>";
-    }
+    
 
     unset($_SESSION['errors']);
     unset($_SESSION['formData']);
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,22 +42,31 @@ if(isset($_SESSION['errors']) && isset($_SESSION['formData'])) {
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                      <input type="email" id="email" class="form-control" name="email"/>
+                      <input type="email" id="email" class="form-control" name="email" value="<?php echo htmlspecialchars($formData['email'] ?? ''); ?>"/>
                       <label class="form-label" for="email">Your Email</label>
+                      <?php if (isset($errors['email'])): ?>
+                        <div class="alert alert-danger" role="alert"><?php echo $errors['email']; ?></div>
+                      <?php endif; ?>
                     </div>
                   </div>
 
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                      <input type="password" id="password" class="form-control" name="password"/>
+                      <input type="password" id="password" class="form-control" name="password" value="<?php echo htmlspecialchars($formData['password'] ?? ''); ?>"/>
                       <label class="form-label" for="password">Password</label>
+                      <?php if (isset($errors['password'])): ?>
+                        <div class="alert alert-danger" role="alert"><?php echo $errors['password']; ?></div>
+                      <?php endif; ?>
                     </div>
                   </div>
 
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                     <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg">Login</button>
                   </div>
+                  <?php if (isset($errors['login'])): ?>
+                    <div class="alert alert-danger" role="alert"><?php echo $errors['login']; ?></div>
+                      <?php endif; ?>
 
                 </form>
 

@@ -32,8 +32,8 @@ class Database {
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    // public function getPdo() {
-    //     return $this->pdo;
-    // }
+     public function getPdo() {
+         return $this->pdo;
+     }
 }
 ?>
