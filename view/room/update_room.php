@@ -21,26 +21,26 @@
 
         $conn = new Database(host, dbname, username, password, port);
         $conn->connectToDatabase();
-        $rooms = Room::get_all_rooms($conn->getPdo());
-
+        
+        // Check if ID is set and fetch room data
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             $roomData = Room::get_room_by_id($conn->getPdo(), $id);
-        }
-
+            // Check if room data exists
+            if ($roomData) {
         ?>
         <form action="../../controller/room_controller.php?action=update" method="post" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?php echo $roomData['id']; ?>">
             <div class="form-group">
-                <label for="name">Name:</label>
+                <label for="room_name">Name:</label>
                 <input type="text" class="form-control" id="room_name" name="room_name" value="<?php echo $roomData['room_name']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="name">Room Number:</label>
+                <label for="room_number">Room Number:</label>
                 <input type="text" class="form-control" id="room_number" name="room_number" value="<?php echo $roomData['room_number']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="name">Busy: 1 or 0</label>
+                <label for="is_busy">Busy: true or false</label>
                 <input type="text" class="form-control" id="is_busy" name="is_busy" value="<?php echo $roomData['is_busy']; ?>" required>
             </div>
 
@@ -49,6 +49,14 @@
                 <a href="room_dashboard.php" class="btn btn-secondary">Back</a>
             </div>
         </form>
+        <?php
+            } else {
+                echo "Room not found.";
+            }
+        } else {
+            echo "Room ID not provided.";
+        }
+        ?>
     </div>
 
 </body>

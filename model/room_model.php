@@ -55,31 +55,54 @@ class Room {
     }
     
     public function insert_room($conn) {
-        // var_dump ($conn);
-            try {
+        try {
+            // Check if the room with the same name already exists
+            $stmt_check = $conn->prepare("SELECT COUNT(*) as count FROM rooms WHERE room_name = :room_name");
+            $stmt_check->bindParam(':room_name', $this->roomName);
+            $stmt_check->execute();
+            $result = $stmt_check->fetch(PDO::FETCH_ASSOC);
+    
+            if ($result['count'] == 0) {
+                // Room with the same name doesn't exist, proceed with insertion
                 $stmt = $conn->prepare("INSERT INTO rooms (room_number, room_name, is_busy) VALUES (:room_number, :room_name, :is_busy)");
                 $stmt->bindParam(':room_number', $this->roomNumber);
                 $stmt->bindParam(':room_name', $this->roomName);
                 $stmt->bindParam(':is_busy', $this->isBusy);
                 $stmt->execute();
                 $this->id = $conn->lastInsertId();
-            } catch (PDOException $e) {
-                echo "Error: " . $e->getMessage();
+            } else {
+                echo "Room with the same name already exists.";
             }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
     
     public function update_room($conn) {
         try {
-            $stmt = $conn->prepare("UPDATE rooms SET room_number = :room_number, room_name = :room_name, is_busy = :is_busy WHERE id = :id");
-            $stmt->bindParam(':room_number', $this->roomNumber);
-            $stmt->bindParam(':room_name', $this->roomName);
-            $stmt->bindParam(':is_busy', $this->isBusy);
-            $stmt->bindParam(':id', $this->id);
-            $stmt->execute();
+            // Check if the room with the same name already exists
+            $stmt_check = $conn->prepare("SELECT COUNT(*) as count FROM rooms WHERE room_name = :room_name AND id != :id");
+            $stmt_check->bindParam(':room_name', $this->roomName);
+            $stmt_check->bindParam(':id', $this->id);
+            $stmt_check->execute();
+            $result = $stmt_check->fetch(PDO::FETCH_ASSOC);
+    
+            if ($result['count'] == 0) {
+                // Room with the same name doesn't exist or exists with the same ID, proceed with update
+                $stmt = $conn->prepare("UPDATE rooms SET room_number = :room_number, room_name = :room_name, is_busy = :is_busy WHERE id = :id");
+                $stmt->bindParam(':room_number', $this->roomNumber);
+                $stmt->bindParam(':room_name', $this->roomName);
+                $stmt->bindParam(':is_busy', $this->isBusy);
+                $stmt->bindParam(':id', $this->id);
+                $stmt->execute();
+            } else {
+                echo "Room with the same name already exists.";
+            }
         } catch (PDOException $e) {
-            throw new Exception("Error updating room: " . $e->getMessage());
+            echo "Error: " . $e->getMessage();
         }
     }
+    
     
     
     public static function delete_room($conn, $id) {
