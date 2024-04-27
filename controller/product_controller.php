@@ -1,7 +1,7 @@
 <?php
 
 include_once '../helper/db_connection.php';
-include_once '../model/Product_model.php';
+include_once '../model/product_model.php';
 
 class ProductController
 {
@@ -55,15 +55,26 @@ class ProductController
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (isset($_GET['action']) && $_GET['action'] == 'insert') {
-                $name = $_POST['name'];
-                $price = $_POST['price'];
-                $categoryId = $_POST['category_id'];
-                $image = $this->uploadImage($_FILES["image"]);
+                try {
 
-                $product = new Product(null, $name, $price, $image, true, $categoryId);
-                $product->insert_product($this->conn);
-                header("Location: ../view/product/product_dashboard.php");
-                exit;
+                    $name = $_POST['name'];
+                    $price = $_POST['price'];
+                    $categoryId = $_POST['category_id'];
+                    $image = $this->uploadImage($_FILES["image"]);
+
+                    var_dump($name);
+                    var_dump($price);
+                    var_dump($categoryId);
+                    var_dump($image);
+
+
+                    $product = new Product( null ,$name, $price, $image, true, $categoryId);
+                    $product->insert_product($this->conn);
+                    // header("Location: ../view/product/product_dashboard.php");
+                    // exit;
+                } catch (Exception $e) {
+                    echo $e->getMessage(); 
+                }
             } elseif (isset($_GET['action']) && $_GET['action'] == 'update') {
                 $id = $_POST['id'];
                 $name = $_POST['name'];
