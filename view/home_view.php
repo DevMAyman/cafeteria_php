@@ -1,6 +1,8 @@
 <?php 
 require_once "../helper/db_connection.php";
 require_once "../model/product_model.php";
+require_once "../model/room_model.php";
+
 require '../config.php';
 
 
@@ -196,7 +198,7 @@ echo <<<HTML
           </td>
         </tr>
         <!-- Order Room Selection -->
-        <tr>
+        <!-- <tr>
           <td colspan="5" class="order-room">
             <label for="rooms">Room:</label>
             <select name="rooms" id="rooms">
@@ -206,7 +208,25 @@ echo <<<HTML
               <option value="audi">Room 4</option>
             </select>
           </td>
-        </tr>
+        </tr> -->
+        <!-- Order Room Selection -->
+<!-- Order Room Selection -->
+<tr>
+  <td colspan="5" class="order-room">
+    <label for="rooms">Room:</label>
+    <select name="rooms" id="rooms">
+      <?php 
+      $conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
+       $conn->connectToDatabase();
+      $Rooms = Room::get_all_rooms($conn->getPdo());
+      for ($i = 0; $i < count($Rooms); $i++): ?>
+        <option value="<?php echo $Rooms[$i]['id']; ?>"><?php echo $Rooms[$i]['room_name']; ?></option>
+      <?php endfor; ?>
+    </select>
+  </td>
+</tr>
+
+
         <!-- Confirm Button -->
         <tr>
           <td colspan="5" class="text-center">
