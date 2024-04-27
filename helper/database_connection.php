@@ -18,6 +18,12 @@ class Database {
     public function closeConnection() {
         $this->conn = null;
     }
+
+    public function select($table) {
+        $sql = "SELECT * FROM {$table}";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
 ?>

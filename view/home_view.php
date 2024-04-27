@@ -1,5 +1,5 @@
 <?php 
-require_once "../helper/db_connection _copy.php";
+require_once "../helper/db_connection.php";
 require_once "../model/product_model.php";
 require '../config.php';
 
@@ -70,7 +70,7 @@ function display_in_table($rows) {
       <div class="slideshow">
         <div class="slider">
           <div class="item">
-            <img src="https://niococktails.co.uk/cdn/shop/articles/mocktail.jpg?v=1643106436" />
+            <img style="width:1800px" src="https://images.squarespace-cdn.com/content/v1/54bf12d2e4b0f0d81bf74ee7/1633739567094-68TGD96YUA59KW9L9122/Fruit+juice.jpg" />
           </div>
           <div class="item">
             <img src="https://imgeng.jagran.com/images/2023/aug/herbal-drinks-for-health1692251498997.jpg" />
@@ -331,10 +331,12 @@ echo <<<HTML
 </html>
 HTML;
 }
- 
-$db = new Database(host, dbname, username, password, port);
-$conn = $db->connectToDatabase(); 
-
-$rows = $db->select("products");
-display_in_table($rows); 
+try {
+  $conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
+  $conn->connectToDatabase();
+  $rows = Product::get_all_Products($conn->getPdo());
+  display_in_table($rows);
+} catch (Exception $e) {
+  var_dump($e->getMessage());
+}
 ?>
