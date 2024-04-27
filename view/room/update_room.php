@@ -15,8 +15,8 @@
         <h2>Update Room</h2>
         <?php
         include_once '../../model/room_model.php';
-        require_once "../helper/db_connection_copy.php";
-        require '../config.php';
+        require_once "../../helper/db_connection.php";
+        require_once '../../config.php';
 
 
         $conn = new Database(host, dbname, username, password, port);
@@ -36,9 +36,14 @@
                 <input type="text" class="form-control" id="room_name" name="room_name" value="<?php echo $roomData['room_name']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="isBusy">Available:</label>
-                <input type="checkbox" id="isBusy" name="isBusy" <?php if ($roomData['isBusy']) echo 'checked'; ?>>
+                <label for="name">Room Number:</label>
+                <input type="text" class="form-control" id="room_number" name="room_number" value="<?php echo $roomData['room_number']; ?>" required>
             </div>
+            <div class="form-group">
+                <label for="name">Busy: 1 or 0</label>
+                <input type="text" class="form-control" id="is_busy" name="is_busy" value="<?php echo $roomData['is_busy']; ?>" required>
+            </div>
+
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Save</button>
                 <a href="room_dashboard.php" class="btn btn-secondary">Back</a>

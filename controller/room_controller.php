@@ -1,6 +1,6 @@
 <?php
 
-require_once "../helper/db_connection _copy.php";
+require_once "../helper/db_connection.php";
 require_once "../model/room_model.php";
 
 
@@ -24,21 +24,29 @@ class RoomController
                 $isBusy = isset($_POST['is_busy']) ? true : false;
 
                 $room = new Room($roomNumber, $roomName, $isBusy);
+                var_dump($this->conn);
                 $room->insert_room($this->conn);
                 header("Location: ../view/room/room_dashboard.php");
                 exit;
             } elseif (isset($_GET['action']) && $_GET['action'] == 'update') {
-                $id = $_POST['id'];
-                $roomNumber = $_POST['room_number'];
-                $roomName = $_POST['room_name'];
-                $isBusy = isset($_POST['is_busy']) ? true : false;
-
-                $room = new Room($roomNumber, $roomName, $isBusy);
-                $room->setId($id);
-                $room->update_room($this->conn);
-                header("Location: ../view/room/room_dashboard.php");
+                try {
+                    $id = $_POST['id'];
+                    $roomNumber = $_POST['room_number'];
+                    $roomName = $_POST['room_name'];
+                    $isBusy = isset($_POST['is_busy']) ? true : false;
+                    // Correcting the order of parameters when creating Room object
+                    $room = new Room($roomNumber, $roomName, $isBusy); // Corrected order
+                    var_dump($room);
+                    $room->update_room($this->conn);
+                } catch (Exception $e) {
+                    echo "Error: " . $e->getMessage();
+                    exit; // Optionally, you can exit here to prevent further execution
+                }
+                // header("Location: ../view/room/room_dashboard.php");
                 exit;
-            } else {
+            }
+            
+             else {
                 echo "Invalid request";
             }
         } elseif ($_SERVER["REQUEST_METHOD"] == "GET") {

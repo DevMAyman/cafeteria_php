@@ -7,6 +7,7 @@
     <title>Product Dashboard</title>
     <?php include_once '../../helper/base.php'; ?>
     <?php include_once '../../helper/db_connection.php'; ?>
+
     <link href="styles.css?<?php echo time(); ?>" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 

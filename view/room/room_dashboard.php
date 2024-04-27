@@ -1,8 +1,3 @@
-<?php
-    require_once '../../helper/base.php';
-    require_once '../../helper/db_connection _copy.php';
-    require_once '../../config.php';
-?>
 
 
 <!DOCTYPE html>
@@ -12,6 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Dashboard</title>
+    <?php include_once '../../helper/base.php'; ?>
+    <?php include_once '../../helper/db_connection.php'; ?>
+    <?php include_once '../../config.php';?>
 
 
     <link href="styles.css?<?php echo time(); ?>" rel="stylesheet">
@@ -34,7 +32,9 @@
             <tbody>
                 <?php
                 
-
+                require_once '../../model/room_model.php';
+                require_once '../../helper/db_connection.php';
+                require_once '../../config.php';
 
                 $conn = new Database(host, dbname, username, password, port);
                 $conn->connectToDatabase();

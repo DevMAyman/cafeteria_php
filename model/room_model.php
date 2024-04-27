@@ -55,22 +55,32 @@ class Room {
     }
     
     public function insert_room($conn) {
-        $stmt = $conn->prepare("INSERT INTO rooms (room_number, room_name, is_busy) VALUES (:room_number, :room_name, :is_busy)");
-        $stmt->bindParam(':room_number', $this->roomNumber);
-        $stmt->bindParam(':room_name', $this->roomName);
-        $stmt->bindParam(':is_busy', $this->isBusy);
-        $stmt->execute();
-        $this->id = $conn->lastInsertId();
+        // var_dump ($conn);
+            try {
+                $stmt = $conn->prepare("INSERT INTO rooms (room_number, room_name, is_busy) VALUES (:room_number, :room_name, :is_busy)");
+                $stmt->bindParam(':room_number', $this->roomNumber);
+                $stmt->bindParam(':room_name', $this->roomName);
+                $stmt->bindParam(':is_busy', $this->isBusy);
+                $stmt->execute();
+                $this->id = $conn->lastInsertId();
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
     }
     
     public function update_room($conn) {
-        $stmt = $conn->prepare("UPDATE rooms SET room_number = :room_number, room_name = :room_name, is_busy = :is_busy WHERE id = :id");
-        $stmt->bindParam(':room_number', $this->roomNumber);
-        $stmt->bindParam(':room_name', $this->roomName);
-        $stmt->bindParam(':is_busy', $this->isBusy);
-        $stmt->bindParam(':id', $this->id);
-        $stmt->execute();
+        try {
+            $stmt = $conn->prepare("UPDATE rooms SET room_number = :room_number, room_name = :room_name, is_busy = :is_busy WHERE id = :id");
+            $stmt->bindParam(':room_number', $this->roomNumber);
+            $stmt->bindParam(':room_name', $this->roomName);
+            $stmt->bindParam(':is_busy', $this->isBusy);
+            $stmt->bindParam(':id', $this->id);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Error updating room: " . $e->getMessage());
+        }
     }
+    
     
     public static function delete_room($conn, $id) {
         $stmt = $conn->prepare("DELETE FROM rooms WHERE id = :id");
