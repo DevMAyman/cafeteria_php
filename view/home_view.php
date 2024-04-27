@@ -1,5 +1,5 @@
 <?php 
-require_once "../helper/db_connection _copy.php";
+require_once "../helper/db_connection.php";
 require_once "../model/product_model.php";
 require '../config.php';
 
@@ -314,9 +314,9 @@ echo <<<HTML
 </html>
 HTML;
 }
-$db = new Database(host, dbname, username, password, port);
+$db = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
 $conn = $db->connectToDatabase(); 
 
-$rows = $db->select("products");
+$rows = $db->select("products2");
 display_in_table($rows); 
 ?>

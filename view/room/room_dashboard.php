@@ -36,7 +36,7 @@
                 require_once '../../helper/db_connection.php';
                 require_once '../../config.php';
 
-                $conn = new Database(host, dbname, username, password, port);
+                $conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
                 $conn->connectToDatabase();
 
                 $rooms = Room::get_all_rooms($conn->getPdo());
