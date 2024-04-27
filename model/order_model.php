@@ -7,6 +7,9 @@ class Order
   private $notes;
   private $status;
   private $date;
+
+  private $roomId;
+
   private $total_quantity;
 
   public function __construct($total_amount, $notes, $status, $date, $total_quantity)
