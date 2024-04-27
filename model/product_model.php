@@ -78,7 +78,7 @@ class Product
 
     public static function get_all_Products($conn)
     {
-        $stmt = $conn->query("SELECT * FROM products");
+        $stmt = $conn->query("SELECT * FROM products2");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
