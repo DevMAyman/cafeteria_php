@@ -53,7 +53,7 @@ function display_in_table($rows) {
       <div class="slideshow">
         <div class="slider">
           <div class="item">
-            <img src="https://niococktails.co.uk/cdn/shop/articles/mocktail.jpg?v=1643106436" />
+            <img style="width:1800px" src="https://images.squarespace-cdn.com/content/v1/54bf12d2e4b0f0d81bf74ee7/1633739567094-68TGD96YUA59KW9L9122/Fruit+juice.jpg" />
           </div>
           <div class="item">
             <img src="https://imgeng.jagran.com/images/2023/aug/herbal-drinks-for-health1692251498997.jpg" />
