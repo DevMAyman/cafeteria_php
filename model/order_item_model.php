@@ -4,7 +4,7 @@ class OrderItem {
     private $id;
     private $quantity;
     private $price;
-    private $order_id;
+    // private $order_id;
     private $product_id;
     
     public function __construct($id,$quantity, $price, $order_id , $product_id) {

@@ -73,4 +73,51 @@ class Product
     {
         $this->categoryId = $categoryId;
     }
+
+    // CRUD operations
+
+    public static function get_all_Products($conn)
+    {
+        $stmt = $conn->query("SELECT * FROM products");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function get_product_by_id($conn, $id)
+    {
+        $stmt = $conn->prepare("SELECT * FROM products WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function insert_product($conn)
+    {
+        $stmt = $conn->prepare("INSERT INTO products (name, price, image, isAvailable, category_id) VALUES (:name, :price, :image, :isAvailable, :category_id)");
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':price', $this->price);
+        $stmt->bindParam(':image', $this->image);
+        $stmt->bindParam(':isAvailable', $this->isAvailable);
+        $stmt->bindParam(':category_id', $this->categoryId);
+        $stmt->execute();
+        $this->id = $conn->lastInsertId();
+    }
+
+    public function update_product($conn)
+    {
+        $stmt = $conn->prepare("UPDATE products SET name = :name, price = :price, image = :image, isAvailable = :isAvailable, category_id = :category_id WHERE id = :id");
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':price', $this->price);
+        $stmt->bindParam(':image', $this->image);
+        $stmt->bindParam(':isAvailable', $this->isAvailable);
+        $stmt->bindParam(':category_id', $this->categoryId);
+        $stmt->bindParam(':id', $this->id);
+        $stmt->execute();
+    }
+
+    public static function delete_product($conn, $id)
+    {
+        $stmt = $conn->prepare("DELETE FROM products WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+    }
 }
