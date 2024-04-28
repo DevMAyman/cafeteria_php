@@ -73,4 +73,49 @@ class Order
   {
     $this->total_quantity = $total_quantity;
   }
+
+  public static function getAllOrders($conn)
+  {
+      $stmt = $conn->query("SELECT * FROM orders");
+      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  public static function getOrderById($conn, $id)
+  {
+      $stmt = $conn->prepare("SELECT * FROM orders WHERE id = :id");
+      $stmt->bindParam(':id', $id);
+      $stmt->execute();
+      return $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
+  public function addOrder($conn)
+  {
+      $stmt = $conn->prepare("INSERT INTO orders (total_amount, notes, status, date, total_quantity) VALUES (:total_amount, :notes, :status, :date, :total_quantity)");
+      $stmt->bindParam(':total_amount', $this->total_amount);
+      $stmt->bindParam(':notes', $this->notes);
+      $stmt->bindParam(':status', $this->status);
+      $stmt->bindParam(':date', $this->date);
+      $stmt->bindParam(':total_quantity', $this->total_quantity);
+      $stmt->execute();
+      $this->id = $conn->lastInsertId();
+  }
+
+  public function updateOrder($conn)
+  {
+      $stmt = $conn->prepare("UPDATE orders SET total_amount = :total_amount, notes = :notes, status = :status, date = :date, total_quantity = :total_quantity WHERE id = :id");
+      $stmt->bindParam(':total_amount', $this->total_amount);
+      $stmt->bindParam(':notes', $this->notes);
+      $stmt->bindParam(':status', $this->status);
+      $stmt->bindParam(':date', $this->date);
+      $stmt->bindParam(':total_quantity', $this->total_quantity);
+      $stmt->bindParam(':id', $this->id);
+      $stmt->execute();
+  }
+
+  public static function deleteOrder($conn, $id)
+  {
+      $stmt = $conn->prepare("DELETE FROM orders WHERE id = :id");
+      $stmt->bindParam(':id', $id);
+      $stmt->execute();
+  }
 }
