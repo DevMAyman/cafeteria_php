@@ -112,5 +112,17 @@ class OrderItem {
             return false;
         }
     }
+
+    public static function getOrderItemsByOrderId($conn, $order_id) {
+        try {
+            $stmt = $conn->prepare("SELECT * FROM order_items WHERE order_id = :order_id");
+            $stmt->bindParam(':order_id', $order_id);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error fetching order items by order ID: " . $e->getMessage());
+            return null;
+        }
+      }
     
 }

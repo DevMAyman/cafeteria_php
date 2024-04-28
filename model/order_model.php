@@ -7,18 +7,18 @@ class Order
   private $notes;
   private $status;
   private $date;
-
   private $roomId;
-
   private $total_quantity;
+  private $userId;
 
-  public function __construct($total_amount, $notes, $status, $date, $total_quantity)
+  public function __construct($total_amount, $notes, $status, $date, $total_quantity,$userId)
   {
     $this->total_amount = $total_amount;
     $this->notes = $notes;
     $this->status = $status;
     $this->date = $date;
     $this->total_quantity = $total_quantity;
+    $this->userId = $userId;
   }
   public function getId()
   {
@@ -49,6 +49,12 @@ class Order
   {
     return $this->total_quantity;
   }
+
+  public function getUserId()
+  {
+    return $this->userId;
+  }
+
   public function setTotalAmount($total_amount)
   {
     $this->total_amount = $total_amount;
@@ -72,6 +78,11 @@ class Order
   public function setTotalQuantity($total_quantity)
   {
     $this->total_quantity = $total_quantity;
+  }
+
+  public function setUserId($userId)
+  {
+    $this->userId = $userId;
   }
 
   public static function getAllOrders($conn)
@@ -101,12 +112,13 @@ class Order
   public function addOrder($conn)
   {
     try {
-      $stmt = $conn->prepare("INSERT INTO orders (total_amount, notes, status, date, total_quantity) VALUES (:total_amount, :notes, :status, :date, :total_quantity)");
+      $stmt = $conn->prepare("INSERT INTO orders (total_amount, notes, status, date, total_quantity,user_id) VALUES (:total_amount, :notes, :status, :date, :total_quantity,: user_id)");
       $stmt->bindParam(':total_amount', $this->total_amount);
       $stmt->bindParam(':notes', $this->notes);
       $stmt->bindParam(':status', $this->status);
       $stmt->bindParam(':date', $this->date);
       $stmt->bindParam(':total_quantity', $this->total_quantity);
+      $stmt->bindParam(':userId', $this->userId);
       $stmt->execute();
       $this->id = $conn->lastInsertId();
     } catch (PDOException $e) {
@@ -143,4 +155,19 @@ class Order
       return false;
     }
   }
+
+  public static function updateOrderStatus($conn, $orderId, $newStatus) {
+    try {
+        $stmt = $conn->prepare("UPDATE orders SET status = :status WHERE id = :id");
+        $stmt->bindParam(':status', $newStatus);
+        $stmt->bindParam(':id', $orderId);
+        $stmt->execute();
+        return true;
+    } catch (PDOException $e) {
+        error_log("Error updating order status: " . $e->getMessage());
+        return false;
+    }
+  }
+
+
 }
