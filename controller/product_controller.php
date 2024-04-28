@@ -70,8 +70,8 @@ class ProductController
 
                     $product = new Product( null ,$name, $price, $image, true, $categoryId);
                     $product->insert_product($this->conn);
-                    // header("Location: ../view/product/product_dashboard.php");
-                    // exit;
+                    header("Location: ../view/product/product_dashboard.php");
+                    exit;
                 } catch (Exception $e) {
                     echo $e->getMessage(); 
                 }

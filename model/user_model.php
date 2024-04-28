@@ -1,17 +1,18 @@
 <?php
 // require_once('../helper/db_connection.php');
 // require_once('Cloudinary.php');
+include_once '../base.php';
 
 class UserModel  {
      public static function createUserTable(){
          try {
-            $pdo = new PDO('mysql:host=127.0.0.1;dbname=myusers;charset=utf8', 'root', 'mysql@123');
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'test', 'Shab_jdeed808');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
         }
         try {
-            $sql = "CREATE TABLE IF NOT EXISTS myusers.users (
+            $sql = "CREATE TABLE IF NOT EXISTS cafeteria.users (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
                 email VARCHAR(255) NOT NULL UNIQUE,
@@ -30,7 +31,7 @@ class UserModel  {
     }
     public static function createUser($name, $email, $password, $room_no, $ext, $profile_picture, $role) {
         try {
-            $pdo = new PDO('mysql:host=127.0.0.1;dbname=myusers;charset=utf8', 'root', 'mysql@123');
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'test', 'Shab_jdeed808');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $pdo->prepare("INSERT INTO users (name, email, password, room_no, ext, profile_picture, role) VALUES (?, ?, ?, ?, ?, ?, ?)");
