@@ -76,20 +76,31 @@ class Order
 
   public static function getAllOrders($conn)
   {
+    try {
       $stmt = $conn->query("SELECT * FROM orders");
       return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      error_log("Error fetching all orders: " . $e->getMessage());
+      return null;
+    }
   }
 
   public static function getOrderById($conn, $id)
   {
+    try {
       $stmt = $conn->prepare("SELECT * FROM orders WHERE id = :id");
       $stmt->bindParam(':id', $id);
       $stmt->execute();
       return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      error_log("Error fetching order by ID: " . $e->getMessage());
+      return null;
+    }
   }
 
   public function addOrder($conn)
   {
+    try {
       $stmt = $conn->prepare("INSERT INTO orders (total_amount, notes, status, date, total_quantity) VALUES (:total_amount, :notes, :status, :date, :total_quantity)");
       $stmt->bindParam(':total_amount', $this->total_amount);
       $stmt->bindParam(':notes', $this->notes);
@@ -98,10 +109,15 @@ class Order
       $stmt->bindParam(':total_quantity', $this->total_quantity);
       $stmt->execute();
       $this->id = $conn->lastInsertId();
+    } catch (PDOException $e) {
+      error_log("Error adding order: " . $e->getMessage());
+      return false;
+    }
   }
 
   public function updateOrder($conn)
   {
+    try {
       $stmt = $conn->prepare("UPDATE orders SET total_amount = :total_amount, notes = :notes, status = :status, date = :date, total_quantity = :total_quantity WHERE id = :id");
       $stmt->bindParam(':total_amount', $this->total_amount);
       $stmt->bindParam(':notes', $this->notes);
@@ -110,12 +126,21 @@ class Order
       $stmt->bindParam(':total_quantity', $this->total_quantity);
       $stmt->bindParam(':id', $this->id);
       $stmt->execute();
+    } catch (PDOException $e) {
+      error_log("Error updating order: " . $e->getMessage());
+      return false;
+    }
   }
 
   public static function deleteOrder($conn, $id)
   {
+    try {
       $stmt = $conn->prepare("DELETE FROM orders WHERE id = :id");
       $stmt->bindParam(':id', $id);
       $stmt->execute();
+    } catch (PDOException $e) {
+      error_log("Error deleting order: " . $e->getMessage());
+      return false;
+    }
   }
 }
