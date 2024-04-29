@@ -1,143 +1,94 @@
-<?php 
-require_once "../helper/db_connection.php";
-require_once "../model/product_model.php";
-require_once "../model/room_model.php";
-
-require '../config.php';
-
-
- //for navbar
-//require_once('../helper/check_admin.php');
-
-//session_start();
-//$isAdmin = isAdmin();
- 
-
-
-function display_in_table($rows) {
-
-  //if ($isAdmin) {
-    //include('admin_navbar.php');
-//} else {
-  // include('user_navbar.php');
-//}
-
-  echo <<<HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-    crossorigin="anonymous"
-  />
-  <script
-    src="https://code.jquery.com/jquery-3.6.0.min.js"
-    crossorigin="anonymous"
-  ></script>
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
-  />
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
-  />
-  <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
-  ></script>
-  <link
-    rel="stylesheet"
-    href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
-    crossorigin="anonymous"
-  />
-  <link rel="stylesheet" href="../styles/home_style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link rel="stylesheet" href="../styles/home_style.css">
 </head>
-
 <body style="overflow-x:hidden">
-  <!-- ______________________________slider_________________________________-->
   <div class="div1">
     <div class="split-slideshow">
       <div class="slideshow">
         <div class="slider">
           <div class="item">
-            <img style="width:1800px" src="https://images.squarespace-cdn.com/content/v1/54bf12d2e4b0f0d81bf74ee7/1633739567094-68TGD96YUA59KW9L9122/Fruit+juice.jpg" />
+          <img src="https://muffinbreak.com.au/wp-content/uploads/2018/01/Drinks-1600x800.jpg" />
+
           </div>
           <div class="item">
-            <img src="https://imgeng.jagran.com/images/2023/aug/herbal-drinks-for-health1692251498997.jpg" />
+            <img src="https://food-images.files.bbci.co.uk/food/recipes/iced_coffee_01204_16x9.jpg" />
           </div>
           <div class="item">
-            <img src="https://www.shutterstock.com/image-photo/flat-lay-composition-bottles-delicious-600nw-1845213580.jpg" />
+            <img src="https://insanelygoodrecipes.com/wp-content/uploads/2021/10/Smoothies-with-Fresh-Fruits-and-Berries.jpg" />
           </div>
           <div class="item">
-            <img src="https://unocasa.com/cdn/shop/articles/types_of_coffee_91a828a5-7ff3-427d-acaa-c8b7289c9e5a_1024x.jpg?v=1621261041" />
+          <img style="width:1800px" src="https://www.mashed.com/img/gallery/more-than-25-of-people-agree-this-chain-restaurant-has-the-worst-drink-menu/l-intro-1618229724.jpg" />
           </div>
         </div>
       </div>
       <div class="slideshow-text">
-        <div class="item">Special</div>
-        <div class="item">Herbs</div>
-        <div class="item">Fruits</div>
+        <div class="item">All You Need</div>
         <div class="item">Caffien</div>
+        <div class="item">Fruits</div>
+        <div class="item">Special</div>
       </div>
     </div>
   </div>
 
   <div class="the-most" target="_blank">
     <h1 class="header-of-drinks">Drinks That We Offer</h1>
-
-    <!-- ______________________________drinks cards_________________________________-->
-
+<div class="products-div">
     <table class="container">
       <tbody>
-HTML;
+<?php
+require_once "../helper/db_connection.php";
+require_once "../model/product_model.php";
+require_once "../model/room_model.php";
+require '../config.php';
 
-for ($i = 0; $i < count($rows); $i += 2) {
-  echo "<tr class='row'>";
+function display_in_table($rows, $conn) {
+  for ($i = 0; $i < count($rows); $i += 2) {
+    echo "<tr class='row'>";
 
-  // Display the first product
-  $row1 = $rows[$i];
-  $name1 = $row1['name'];
-  $price1 = $row1['price'];
-  $image1 = $row1['image'];
-
-  echo '<td class="col-md-4">
-          <div class="cardcontainer">
-          <div class="photo">
-          <a href="#"><img src="' . $image1 . '" /></a>
-            <div class="type2">Cold</div>
-          </div>
-            <div class="content">
-              <p class="txt4">' . $name1 . '</p>
+    $row1 = $rows[$i];
+    $name1 = $row1['name'];
+    $price1 = $row1['price'];
+    $image1 = $row1['image'];
+    $isAvailable1 = $row1['isAvailable'];
+    echo '<td class="col-md-4">
+            <div class="cardcontainer">
+              <div class="photo">
+                <a href="#"><img src="' . $image1 . '" /></a>
+                <div class="type2 ' . ($isAvailable1 == 1 ? 'green-background' : 'red-background') . '">' . ($isAvailable1 == 1 ? 'Available' : 'Not Available') . '</div>
+                </div>
+              <div class="content">
+                <p class="txt4">' . $name1 . '</p>
+              </div>
+              <div class="footer">
+                <p class="txt3 price">Price: <i class="fas fa-dollar-sign"></i>' . $price1 . '</p>
+              </div>
             </div>
-            <div class="footer">
-              <p class="txt3 price">Price: <i class="fas fa-dollar-sign"></i>' . $price1 . '</p>
-            </div>
-          </div>
-        </td>';
+          </td>';
 
-  // Check if there's another product to display
-  if ($i + 1 < count($rows)) {
-      // Display the second product
+    if ($i + 1 < count($rows)) {
       $row2 = $rows[$i + 1];
       $name2 = $row2['name'];
       $price2 = $row2['price'];
       $image2 = $row2['image'];
+      $isAvailable2 = $row2['isAvailable'];
 
       echo '<td class="col-md-4">
               <div class="cardcontainer">
                 <div class="photo">
-                <a href="#"><img src="' . $image2 . '" /></a>
-                  <div class="type2">Cold</div>
-                </div>
+                  <a href="#"><img src="' . $image2 . '" /></a>
+                  <div class="type2 ' . ($isAvailable1 == 1 ? 'green-background' : 'red-background') . '">' . ($isAvailable1 == 1 ? 'Available' : 'Not Available') . '</div>
+                  </div>
                 <div class="content">
                   <p class="txt4">' . $name2 . '</p>
                 </div>
@@ -146,50 +97,51 @@ for ($i = 0; $i < count($rows); $i += 2) {
                 </div>
               </div>
             </td>';
+    }
+
+    echo "</tr>";
+    echo '<tr class="custom-margin"></tr>'; 
   }
-
-  echo "</tr>";
-  echo '<tr class="custom-margin"></tr>'; 
-
 }
 
-echo <<<HTML
+try {
+  $conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
+  $conn->connectToDatabase();
+  $rows = Product::get_all_Products($conn->getPdo());
+  display_in_table($rows, $conn); 
+} catch (Exception $e) {
+  var_dump($e->getMessage());
+}
+?>
       </tbody>
     </table>
-
-    <!-- ______________________________order_________________________________-->
+</div>
+<div class="order-div">
     <table class="container1 mb-5">
       <tbody>
-        <!-- Product Information -->
         <tr>
           <td colspan="5" class="p-2 bg-white mt-4 rounded">
             <div class="d-flex flex-row align-items-center">
-              <!-- Product Image -->
               <div class="mr-1 product-item">
                 <img class="rounded" src="https://i.imgur.com/XiFJkhI.jpg" width="70" />
               </div>
-              <!-- Product Details -->
               <div class="d-flex flex-column align-items-center product-details">
                 <span class="font-weight-bold product-item">Basic T-shirt</span>
               </div>
-              <!-- Quantity -->
               <div class="d-flex flex-row align-items-center qty">
                 <i class="product-item fa fa-minus text-danger"></i>
                 <h5 class="product-item text-grey mt-1 mr-1 ml-1">2</h5>
                 <i class="product-item fa fa-plus text-success"></i>
               </div>
-              <!-- Price -->
               <div>
                 <h5 class="product-item text-grey">$20.00</h5>
               </div>
-              <!-- Remove Button -->
               <div class="d-flex align-items-center">
                 <i class="product-item fa fa-trash mb-1 text-danger"></i>
               </div>
             </div>
           </td>
         </tr>
-        <!-- Order Notes -->
         <tr>
           <td colspan="5" class="order-notes">
             <label>Notes</label>
@@ -197,37 +149,20 @@ echo <<<HTML
             <input type="text" placeholder="Add notes..." />
           </td>
         </tr>
-        <!-- Order Room Selection -->
-        <!-- <tr>
-          <td colspan="5" class="order-room">
-            <label for="rooms">Room:</label>
-            <select name="rooms" id="rooms">
-              <option value="volvo">Room 1</option>
-              <option value="saab">Room 2</option>
-              <option value="mercedes">Room 3</option>
-              <option value="audi">Room 4</option>
-            </select>
-          </td>
-        </tr> -->
-        <!-- Order Room Selection -->
 <!-- Order Room Selection -->
 <tr>
-  <td colspan="5" class="order-room">
-    <label for="rooms">Room:</label>
-    <select name="rooms" id="rooms">
-      <?php 
-      $conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
-       $conn->connectToDatabase();
-      $Rooms = Room::get_all_rooms($conn->getPdo());
-      for ($i = 0; $i < count($Rooms); $i++): ?>
-        <option value="<?php echo $Rooms[$i]['id']; ?>"><?php echo $Rooms[$i]['room_name']; ?></option>
-      <?php endfor; ?>
-    </select>
-  </td>
-</tr>
-
-
-        <!-- Confirm Button -->
+        <td colspan="5" class="order-room">
+            <label for="rooms">Room:</label>
+            <select name="rooms" id="rooms">
+                <?php 
+                $Rooms = Room::get_all_rooms($conn->getPdo());
+                for ($i = 0; $i < count($Rooms); $i++): ?>
+                    <option value="<?php echo $Rooms[$i]['id']; ?>"><?php echo $Rooms[$i]['room_name']; ?></option>
+                <?php endfor; ?>
+            </select>
+        </td>
+    </tr>
+<!-- Order Room Selection -->
         <tr>
           <td colspan="5" class="text-center">
             <button type="button" class="btn btn-success Success">Confirm</button>
@@ -235,9 +170,12 @@ echo <<<HTML
         </tr>
       </tbody>
     </table>
-
+                </div>
   <script>
     $(document).ready(function () {
+    // var contentHeight = $('.the-most').height() + $('.header-of-drinks').height()-2300;
+    // $('.container1').css('margin-top', contentHeight + 'px');
+
       var $slider = $(".slideshow .slider"),
         maxItems = $(".item", $slider).length,
         dragging = false,
@@ -346,14 +284,3 @@ echo <<<HTML
   </script>
 </body>
 </html>
-HTML;
-}
-try {
-  $conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
-  $conn->connectToDatabase();
-  $rows = Product::get_all_Products($conn->getPdo());
-  display_in_table($rows);
-} catch (Exception $e) {
-  var_dump($e->getMessage());
-}
-?>

@@ -137,6 +137,8 @@
   .the-most {
 	position: absolute;
 	margin-top: 650px;
+	/* display: flex;
+	justify-content: space-between; */
   }
   .header-of-drinks {
 	margin-left: 635px;
@@ -190,9 +192,8 @@
 	font-size: 20px;
   }
   .type2 {
-	width: 90px;
+	width: 200px;
 	height: 30px;
-	background-color: rgb(20,93,183);
 	color: white;
 	position: relative;
 	top: -30px;
@@ -254,10 +255,11 @@ height: 100px;  }
 	.container1{
 	  /* margin-left:-670px;
 	  margin-top:-1200px; */
-	  margin-top:-900px;
+	  /* margin-top:-1350px; */
 	  width:800px;
 	  padding: 0;
-	}
+display: flex;	
+}
 	.Success{
 	  width:90px;
 	  height:40px;
@@ -293,3 +295,20 @@ height: 100px;  }
 		color:rgb(143,154,33);
 		font-size: large;
 	}
+
+
+.cardcontainer .type2.green-background {
+    background-color: rgb(59,73,24);
+    color: white;
+}
+
+.cardcontainer .type2.red-background {
+    background-color: rgb(97,9,16);
+    color: white;
+}
+.order-div{
+	display: flex;
+}
+.prodicts-div{
+	display: flex;
+}
