@@ -98,10 +98,42 @@ if (session_status() == PHP_SESSION_NONE) {
           require_once "../helper/db_connection.php";
           require_once "../model/product_model.php";
           require_once "../model/room_model.php";
-          require '../config.php';
+          require_once '../config.php';
 
           function display_in_table($rows, $conn)
           {
+
+              // Handle search///////////////////////////
+   if(isset($_GET['search'])) {
+   
+    $search_query = $_GET['search'];
+     
+    
+    $filtered_rows = array_filter($rows, function($row) use ($search_query) {
+        return stripos($row['name'], $search_query) !== false;
+    });
+ 
+    foreach ($filtered_rows as $row) {
+      $name = $row['name'];
+      $price = $row['price'];
+      $image = $row['image'];
+      $isAvailable = $row['isAvailable'];
+      echo '<td class="col-md-4">
+              <div class="cardcontainer">
+                <div class="photo">
+                  <a href="#"><img src="' . $image . '" /></a>
+                  <div class="type2 ' . ($isAvailable == 1 ? 'green-background' : 'red-background') . '">' . ($isAvailable == 1 ? 'Available' : 'Not Available') . '</div>
+                  </div>
+                <div class="content">
+                  <p class="txt4">' . $name . '</p>
+                </div>
+                <div class="footer">
+                  <p class="txt3 price">Price: <i class="fas fa-dollar-sign"></i>' . $price . '</p>
+                </div>
+              </div>
+            </td>';
+  }
+  }  else { 
             for ($i = 0; $i < count($rows); $i += 2) {
               echo "<tr class='row'>";
 
@@ -156,6 +188,7 @@ if (session_status() == PHP_SESSION_NONE) {
               echo '<tr class="custom-margin"></tr>';
             }
           }
+        }
 
           try {
             $conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
