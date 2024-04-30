@@ -1,5 +1,6 @@
 <?php
-session_start(); 
+    session_start();
+  
 include '../helper/db_connection.php';
 require_once('../helper/validation.php');
 require_once('../config.php');
@@ -16,9 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($key == 'email' && $value != "" && !Validation::validateEmail($value)) {
             $errors[$key] = "$key is not valid.";
        }
-        if ($key == 'password' && $value != "" && !Validation::validateStringLength($value, 8)) {
-           $errors[$key] = "$key must be at least 8 characters long.";
-        }
+      // if ($key == 'password' && $value != "" && !Validation::validateStringLength($value, 8)) {
+       //   $errors[$key] = "$key must be at least 8 characters long.";
+       // }
 
         $formData[$key] = $value;
     }
@@ -31,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit; 
     } else {
         // Connect to the database
-        $database = new Database(DB_HOST, DB_NAME, DB_USER, DB_PASS);
+        $database = new Database(DB_HOST, DB_NAME, DB_USERNAME , DB_PASSWORD);
         $database->connectToDatabase();
         
         // Check if the email and password exist in the database
@@ -47,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $statement->fetch(PDO::FETCH_ASSOC);
         
         if ($user) {
-            
+            $_SESSION['email'] = $email;
             header("Location: ../view/home_view.php");
             exit;
         } else {

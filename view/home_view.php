@@ -1,9 +1,20 @@
+
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+
+   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
@@ -11,8 +22,30 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
   <link rel="stylesheet" href="../styles/home_style.css">
+
+  
 </head>
+
+
 <body style="overflow-x:hidden">
+
+<?php
+//for navbar
+ require_once('../helper/check_admin.php');
+
+   
+   $isAdmin = isAdmin();
+   
+   $image = access_image();
+   
+
+    if ($isAdmin) {
+    include('admin_navbar.php');
+} else {
+   include('user_navbar.php');
+}
+?>
+
   <div class="div1">
     <div class="split-slideshow">
       <div class="slideshow">
@@ -40,8 +73,20 @@
       </div>
     </div>
   </div>
+  
 
-  <div class="the-most" target="_blank">
+   
+ 
+
+  <div class="the-most " target="_blank">
+
+  <div style="height:120px"></div>
+    <form class="form header-of-drinks d-flex" method="GET">
+      <input class="form-control mr-2" type="text" placeholder="Search" name="search" aria-label="Search">
+      <button class="btn btn-outline-light " type="submit"><i class="fas fa-search" style="color: rgb(143, 154, 33)"></i></button>
+    </form>
+ 
+
     <h1 class="header-of-drinks">Drinks That We Offer</h1>
 <div class="products-div">
     <table class="container">
@@ -50,10 +95,44 @@
 require_once "../helper/db_connection.php";
 require_once "../model/product_model.php";
 require_once "../model/room_model.php";
-require '../config.php';
+require_once '../config.php';
 
 function display_in_table($rows, $conn) {
+   // Handle search///////////////////////////
+   if(isset($_GET['search'])) {
+   
+    $search_query = $_GET['search'];
+     
+    
+    $filtered_rows = array_filter($rows, function($row) use ($search_query) {
+        return stripos($row['name'], $search_query) !== false;
+    });
+ 
+    foreach ($filtered_rows as $row) {
+      $name = $row['name'];
+      $price = $row['price'];
+      $image = $row['image'];
+      $isAvailable = $row['isAvailable'];
+      echo '<td class="col-md-4">
+              <div class="cardcontainer">
+                <div class="photo">
+                  <a href="#"><img src="' . $image . '" /></a>
+                  <div class="type2 ' . ($isAvailable == 1 ? 'green-background' : 'red-background') . '">' . ($isAvailable == 1 ? 'Available' : 'Not Available') . '</div>
+                  </div>
+                <div class="content">
+                  <p class="txt4">' . $name . '</p>
+                </div>
+                <div class="footer">
+                  <p class="txt3 price">Price: <i class="fas fa-dollar-sign"></i>' . $price . '</p>
+                </div>
+              </div>
+            </td>';
+  }
+  }  else { 
+
+
   for ($i = 0; $i < count($rows); $i += 2) {
+
     echo "<tr class='row'>";
 
     $row1 = $rows[$i];
@@ -102,6 +181,8 @@ function display_in_table($rows, $conn) {
     echo "</tr>";
     echo '<tr class="custom-margin"></tr>'; 
   }
+
+}
 }
 
 try {
@@ -112,6 +193,12 @@ try {
 } catch (Exception $e) {
   var_dump($e->getMessage());
 }
+
+
+
+   
+
+
 ?>
       </tbody>
     </table>
@@ -171,6 +258,7 @@ try {
       </tbody>
     </table>
                 </div>
+
   <script>
     $(document).ready(function () {
     // var contentHeight = $('.the-most').height() + $('.header-of-drinks').height()-2300;
@@ -282,5 +370,6 @@ try {
       });
     });
   </script>
+ 
 </body>
 </html>
