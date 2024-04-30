@@ -3,6 +3,7 @@ require_once '../helper/db_connection.php';
 require_once '../model/order_item_model.php';
 require_once '../model/order_model.php';
 require_once '../base.php';
+require_once '../helper/table_exist.php';
 
 class OrderItemController
 {
@@ -12,6 +13,8 @@ class OrderItemController
     {
         $this->conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
         $this->conn->connectToDatabase();
+        orderItemsTableExist($this->conn->getPdo());
+        ordersTableExist($this->conn->getPdo());
     }
 
     public function addOrderItem()
@@ -102,6 +105,7 @@ class OrderItemController
                         $item['product_id']
                     );
                     $orderItem->addOrderItem($this->conn->getPdo());
+                    var_dump($orderItem);
                 }
 
                 unset($_SESSION['order_items']);

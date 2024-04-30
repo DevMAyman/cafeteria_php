@@ -12,7 +12,6 @@ $(document).ready(function() {
               notes: orderNotes
           },
           success: function(response) {
-            console.log(response);
               if (response.status === 'success') {
                   console.log('Order confirmed:', response.message);
               } else {
