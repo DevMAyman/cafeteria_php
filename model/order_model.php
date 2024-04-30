@@ -11,7 +11,7 @@ class Order
   private $total_quantity;
   private $userId;
 
-  public function __construct($total_amount, $notes, $status, $date, $total_quantity,$userId)
+  public function __construct($total_amount, $notes, $status, $date, $total_quantity, $roomId, $userId)
   {
     $this->total_amount = $total_amount;
     $this->notes = $notes;
@@ -19,6 +19,7 @@ class Order
     $this->date = $date;
     $this->total_quantity = $total_quantity;
     $this->userId = $userId;
+    $this->roomId = $roomId;
   }
   public function getId()
   {
@@ -50,6 +51,11 @@ class Order
     return $this->total_quantity;
   }
 
+  public function getRoomId()
+  {
+    return $this->roomId;
+  }
+
   public function getUserId()
   {
     return $this->userId;
@@ -78,6 +84,11 @@ class Order
   public function setTotalQuantity($total_quantity)
   {
     $this->total_quantity = $total_quantity;
+  }
+
+  public function setRoomId($roomId)
+  {
+    $this->roomId = $roomId;
   }
 
   public function setUserId($userId)
@@ -112,20 +123,35 @@ class Order
   public function addOrder($conn)
   {
     try {
-      $stmt = $conn->prepare("INSERT INTO orders (total_amount, notes, status, date, total_quantity,user_id) VALUES (:total_amount, :notes, :status, :date, :total_quantity,: user_id)");
+      // Prepare the INSERT INTO statement, including room_id
+      $stmt = $conn->prepare(
+        "INSERT INTO orders (total_amount, notes, status, date, total_quantity, user_id, room_id) 
+             VALUES (:total_amount, :notes, :status, :date, :total_quantity, :user_id, :room_id)"
+      );
+
+      // Bind the parameters to the prepared statement
       $stmt->bindParam(':total_amount', $this->total_amount);
       $stmt->bindParam(':notes', $this->notes);
       $stmt->bindParam(':status', $this->status);
       $stmt->bindParam(':date', $this->date);
       $stmt->bindParam(':total_quantity', $this->total_quantity);
-      $stmt->bindParam(':userId', $this->userId);
+      $stmt->bindParam(':user_id', $this->userId);  // Bind user_id
+      $stmt->bindParam(':room_id', $this->roomId);  // Bind room_id
+
+      // Execute the prepared statement
       $stmt->execute();
-      $this->id = $conn->lastInsertId();
+
+      // Store the ID of the newly inserted order
+      $this->id = $conn->lastInsertId(); // Get the last inserted ID
+      return $this->id; // Return the ID for further processing
     } catch (PDOException $e) {
+      // Log the error message and return false on failure
       error_log("Error adding order: " . $e->getMessage());
-      return false;
+      return false; // Indicate failure
     }
   }
+
+
 
   public function updateOrder($conn)
   {
@@ -156,18 +182,17 @@ class Order
     }
   }
 
-  public static function updateOrderStatus($conn, $orderId, $newStatus) {
+  public static function updateOrderStatus($conn, $orderId, $newStatus)
+  {
     try {
-        $stmt = $conn->prepare("UPDATE orders SET status = :status WHERE id = :id");
-        $stmt->bindParam(':status', $newStatus);
-        $stmt->bindParam(':id', $orderId);
-        $stmt->execute();
-        return true;
+      $stmt = $conn->prepare("UPDATE orders SET status = :status WHERE id = :id");
+      $stmt->bindParam(':status', $newStatus);
+      $stmt->bindParam(':id', $orderId);
+      $stmt->execute();
+      return true;
     } catch (PDOException $e) {
-        error_log("Error updating order status: " . $e->getMessage());
-        return false;
+      error_log("Error updating order status: " . $e->getMessage());
+      return false;
     }
   }
-
-
 }
