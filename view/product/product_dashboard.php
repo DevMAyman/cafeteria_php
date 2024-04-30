@@ -72,12 +72,8 @@
                 $products = Product::get_all_Products($conn->getPdo());
 
                 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-                $recordsPerPage = 1; 
+                $recordsPerPage = 2; 
                 $tableName = "products"; 
-
-                $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-                $recordsPerPage = 1; // Adjust as needed
-                $tableName = "products";
                 
                 $pagination = new Pagination($recordsPerPage, $currentPage, $tableName);
                 

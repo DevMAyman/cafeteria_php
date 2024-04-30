@@ -71,7 +71,7 @@
                 $conn->connectToDatabase();
 
                 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-                $recordsPerPage = 3; 
+                $recordsPerPage = 2; 
                 $tableName = "rooms"; 
 
                 $pagination = new Pagination($recordsPerPage, $currentPage, $tableName);
