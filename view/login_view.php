@@ -1,19 +1,21 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
 
 if (isset($_SESSION['errors']) && isset($_SESSION['formData'])) {
     $errors = $_SESSION['errors'];
     $formData = $_SESSION['formData'];
 
-     
-   
 
-    
 
     unset($_SESSION['errors']);
     unset($_SESSION['formData']);
 }
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">

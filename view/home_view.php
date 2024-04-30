@@ -1,26 +1,60 @@
+
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous" />
-  <link rel="stylesheet" href="../styles/home_style.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link rel="stylesheet" href="../styles/home_style.css">
+
+  
 </head>
 
-<body>
-  <!-- <div class="div1">
+
+<body style="overflow-x:hidden">
+
+<?php
+//for navbar
+ require_once('../helper/check_admin.php');
+
+   
+   $isAdmin = isAdmin();
+   
+   $image = access_image();
+   
+
+    if ($isAdmin) {
+    include('admin_navbar.php');
+} else {
+   include('user_navbar.php');
+}
+?>
+
+  <div class="div1">
     <div class="split-slideshow">
       <div class="slideshow">
         <div class="slider">
           <div class="item">
-            <img src="https://muffinbreak.com.au/wp-content/uploads/2018/01/Drinks-1600x800.jpg" />
+          <img src="https://muffinbreak.com.au/wp-content/uploads/2018/01/Drinks-1600x800.jpg" />
 
           </div>
           <div class="item">
@@ -30,7 +64,7 @@
             <img src="https://insanelygoodrecipes.com/wp-content/uploads/2021/10/Smoothies-with-Fresh-Fruits-and-Berries.jpg" />
           </div>
           <div class="item">
-            <img style="width:1800px" src="https://www.mashed.com/img/gallery/more-than-25-of-people-agree-this-chain-restaurant-has-the-worst-drink-menu/l-intro-1618229724.jpg" />
+          <img style="width:1800px" src="https://www.mashed.com/img/gallery/more-than-25-of-people-agree-this-chain-restaurant-has-the-worst-drink-menu/l-intro-1618229724.jpg" />
           </div>
         </div>
       </div>
@@ -41,9 +75,21 @@
         <div class="item">Special</div>
       </div>
     </div>
-  </div> -->
+  </div>
+  
 
-  <div class="the-most" target="_blank">
+   
+ 
+
+  <div class="the-most " target="_blank">
+
+  <div style="height:120px"></div>
+    <form class="form header-of-drinks d-flex" method="GET">
+      <input class="form-control mr-2" type="text" placeholder="Search" name="search" aria-label="Search">
+      <button class="btn btn-outline-light " type="submit"><i class="fas fa-search" style="color: rgb(143, 154, 33)"></i></button>
+    </form>
+ 
+
     <h1 class="header-of-drinks">Drinks That We Offer</h1>
     <div class="products-div">
       <table class="container">
@@ -248,25 +294,26 @@
             dragging = false;
           });
 
-        $(".slideshow-right .slider").slick({
-          swipe: false,
-          vertical: true,
-          arrows: false,
-          infinite: true,
-          speed: 950,
-          cssEase: "cubic-bezier(0.7, 0, 0.3, 1)",
-          initialSlide: maxItems - 1,
-        });
-        $(".slideshow-text").slick({
-          swipe: false,
-          vertical: true,
-          arrows: false,
-          infinite: true,
-          speed: 900,
-          cssEase: "cubic-bezier(0.7, 0, 0.3, 1)",
-        });
+      $(".slideshow-right .slider").slick({
+        swipe: false,
+        vertical: true,
+        arrows: false,
+        infinite: true,
+        speed: 950,
+        cssEase: "cubic-bezier(0.7, 0, 0.3, 1)",
+        initialSlide: maxItems - 1,
       });
-    </script>
+      $(".slideshow-text").slick({
+        swipe: false,
+        vertical: true,
+        arrows: false,
+        infinite: true,
+        speed: 900,
+        cssEase: "cubic-bezier(0.7, 0, 0.3, 1)",
+      });
+    });
+  </script>
+ 
 </body>
 
 </html>
