@@ -195,4 +195,30 @@ class Order
       return false;
     }
   }
+
+//   public static function getUserOrders($conn, $user_Id)
+// {
+//     try {
+//         $stmt = $conn->query("SELECT * FROM orders where user_id = $user_Id");
+//         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+//     } catch (PDOException $e) {
+//         error_log("Error fetching all orders: " . $e->getMessage());
+//         return null;
+//     }
+// }
+
+public static function getUserOrders($conn, $userId)
+{
+    try {
+        $stmt = $conn->getPdo()->prepare("SELECT * FROM orders WHERE user_id = :userId");
+        $stmt->bindParam(':userId', $userId);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Error fetching user orders: " . $e->getMessage());
+        return null;
+    }
+}
+
+
 }
