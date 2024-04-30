@@ -53,6 +53,12 @@ class Room {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public static function get_available_rooms($conn) {
+        $stmt = $conn->prepare('SELECT * FROM rooms WHERE is_busy != 1');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     
     public function insert_room($conn) {
         try {
