@@ -24,7 +24,7 @@ class RoomController
                 $isBusy = isset($_POST['is_busy']) ? true : false;
 
                 $room = new Room($roomNumber, $roomName, $isBusy);
-                $isInserted=$room->insert_room($this->conn);
+                $room->insert_room($this->conn);
 
 
  
@@ -72,4 +72,3 @@ class RoomController
 $roomController = new RoomController();
 $roomController->handleRequest();
 ?>
-
