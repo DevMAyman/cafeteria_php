@@ -1,13 +1,22 @@
 <?php
 require('../model/user_model.php');
+session_start(); // Start the session
+if($_POST['user_id']){
+  $_SESSION['user_id']=$_POST['user_id'];
+}
+if(isset($_SESSION['errors']) && isset($_SESSION['formData'])) {
+    $errors = $_SESSION['errors'];
+    $formData = $_SESSION['formData'];
 
-if(isset($_POST['user_id'])) {
-    $user_id = $_POST['user_id'];
+    unset($_SESSION['errors']);
+    unset($_SESSION['formData']);
+}
+if(isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id']; 
 
     $user = UserModel::get_user_by_id($user_id);
 
     if($user) {
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +40,8 @@ if(isset($_POST['user_id'])) {
 
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                <form class="mx-1 mx-md-4" method="POST" action="../controller/user_controller.php"enctype="multipart/form-data">
+                <form class="mx-1 mx-md-4" method="POST" action="../controller/user_controller_update.php" enctype="multipart/form-data">
+                    <input hidden name="user_id" value="<?php echo $_POST['user_id']; ?>">
 
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
@@ -51,29 +61,11 @@ if(isset($_POST['user_id'])) {
                     </div>
                   </div>
 
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="password">Password</label>
-                      <input type="password" id="password" class="form-control" name="password" />
-                      <span class="error-message" style="color:red;"><?php echo isset($errors['password']) ? $errors['password'] : ''; ?></span>
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="confirmPassword">Repeat your password</label>
-                      <input type="password" id="confirmPassword" class="form-control" name="confirmPassword"/>
-                      <span class="error-message" style="color:red;"><?php echo isset($errors['confirmPassword']) ? $errors['confirmPassword'] : ''; ?></span>
-                    </div>
-                  </div>
-
                    <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div data-mdb-input-init class="form-outline flex-fill mb-0">
                       <label class="form-label" for="room">Room No.</label>
-                      <input type="text" id="room" name="room" class="form-control" />
+                      <input type="text" id="room" name="room" class="form-control" value="<?php echo $user['room_no']; ?>"/>
                       <span class="error-message" style="color:red;"><?php echo isset($errors['room']) ? $errors['room'] : ''; ?></span>
                     </div>
                   </div>
@@ -82,7 +74,7 @@ if(isset($_POST['user_id'])) {
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div data-mdb-input-init class="form-outline flex-fill mb-0">
                       <label class="form-label" for="ext">Ext.</label>
-                      <input type="text" id="ext" name="ext" class="form-control" />
+                      <input type="text" id="ext" name="ext" class="form-control" value="<?php echo $user['ext']; ?>"/>
                       <span class="error-message" style="color:red;"><?php echo isset($errors['ext']) ? $errors['ext'] : ''; ?></span>
                     </div>
                   </div>
@@ -91,7 +83,7 @@ if(isset($_POST['user_id'])) {
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div data-mdb-input-init class="form-outline flex-fill mb-0">
                       <label class="form-label" for="image">Image</label>
-                      <input type="file" id="image" name="image" class="form-control" />
+                      <input type="file" id="image" name="image" class="form-control" value="<?php echo $user['image']; ?>"/>
                       <span class="error-message" style="color:red;"><?php echo isset($errors['image']) ? $errors['image'] : ''; ?></span>
                     </div>
                   </div>
@@ -121,11 +113,9 @@ if(isset($_POST['user_id'])) {
 </html>
 <?php
     } else {
-        // User not found
         echo "User not found.";
     }
 } else {
-    // User ID not set
     echo "User ID not provided.";
 }
 ?>

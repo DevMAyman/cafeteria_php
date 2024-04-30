@@ -49,4 +49,12 @@ if (!class_exists('Database')) {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     }
+
+     public function closeConnection() {
+        $this->pdo = null;
+    }
+
+     public function closeConnection() {
+        $this->pdo = null;
+    }
 }

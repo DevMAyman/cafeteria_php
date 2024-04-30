@@ -117,6 +117,40 @@ class UserModel  {
     return $user ? $user : false;
 }
 
+
+
+public static function updateUser($user_id, $name, $email, $room_no, $ext, $profile_picture, $role) {
+    try {
+        echo("sdfsdfdfffff");
+        $pdo = new PDO('mysql:host=127.0.0.1;dbname=myusers;charset=utf8', 'root', 'mysql@123');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Prepare SQL statement
+        $stmt = $pdo->prepare("UPDATE users SET name = ?, email = ?, room_no = ?, ext = ?, profile_picture = ?, role = ? WHERE id = ?");
+
+        // Bind parameters
+        $stmt->bindParam(1, $name);
+        $stmt->bindParam(2, $email);
+        $stmt->bindParam(3, $room_no);
+        $stmt->bindParam(4, $ext);
+        $stmt->bindParam(5, $profile_picture);
+        $stmt->bindParam(6, $role);
+        $stmt->bindParam(7, $user_id);
+
+        // Execute the update statement
+        $stmt->execute();
+        
+        // Close the connection
+        $pdo = null;
+
+        return true; // Return true on success
+    } catch (PDOException $e) {
+        error_log("Error updating user: " . $e->getMessage());
+        echo("Error updating user: " . $e->getMessage());
+        return false; // Return false on failure
+    }
+}
+
 }
 
 

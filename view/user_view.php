@@ -5,14 +5,6 @@ if(isset($_SESSION['errors']) && isset($_SESSION['formData'])) {
     $errors = $_SESSION['errors'];
     $formData = $_SESSION['formData'];
 
-    foreach($errors as $key => $error) {
-        echo "<p>Error in $key: $error</p>";
-    }
-
-    foreach($formData as $key => $value) {
-        echo "<p>$key: $value</p>";
-    }
-
     unset($_SESSION['errors']);
     unset($_SESSION['formData']);
 }
@@ -81,7 +73,7 @@ if(isset($_SESSION['errors']) && isset($_SESSION['formData'])) {
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div data-mdb-input-init class="form-outline flex-fill mb-0">
                       <label class="form-label" for="room">Room No.</label>
-                      <input type="text" id="room" name="room" class="form-control" />
+                      <input type="text" id="room" name="room" class="form-control" value="<?php echo isset($formData['room']) ? $formData['room'] : ''; ?>"/>
                       <span class="error-message" style="color:red;"><?php echo isset($errors['room']) ? $errors['room'] : ''; ?></span>
                     </div>
                   </div>
@@ -90,7 +82,7 @@ if(isset($_SESSION['errors']) && isset($_SESSION['formData'])) {
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div data-mdb-input-init class="form-outline flex-fill mb-0">
                       <label class="form-label" for="ext">Ext.</label>
-                      <input type="text" id="ext" name="ext" class="form-control" />
+                      <input type="text" id="ext" name="ext" class="form-control" value="<?php echo isset($formData['ext']) ? $formData['ext'] : ''; ?>"/>
                       <span class="error-message" style="color:red;"><?php echo isset($errors['ext']) ? $errors['ext'] : ''; ?></span>
                     </div>
                   </div>

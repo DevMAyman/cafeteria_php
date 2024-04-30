@@ -21,7 +21,6 @@ class ProductController
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-        // Check if image file is a actual image or fake image
         $check = getimagesize($file["tmp_name"]);
         if ($check !== false) {
             $uploadOk = 1;
@@ -61,12 +60,6 @@ class ProductController
                     $price = $_POST['price'];
                     $categoryId = $_POST['category_id'];
                     $image = $this->uploadImage($_FILES["image"]);
-
-                    var_dump($name);
-                    var_dump($price);
-                    var_dump($categoryId);
-                    var_dump($image);
-
 
                     $product = new Product( null ,$name, $price, $image, true, $categoryId);
                     $product->insert_product($this->conn);

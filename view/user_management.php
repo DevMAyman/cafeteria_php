@@ -36,18 +36,19 @@ $users = UserModel::get_all_users();
             </thead>
             <tbody>
                 <?php foreach ($users as $user): ?>
-                <tr>
+                <tr >
                     <td><?php echo $user['id']; ?></td>
                     <td><?php echo $user['name']; ?></td>
                     <td><?php echo $user['email']; ?></td>
                     <td><?php echo $user['room_no']; ?></td>
                     <td><?php echo $user['ext']; ?></td>
-                    <td><?php echo $user['profile_picture']; ?></td>
+                    <td><img style="width:100px;" src="<?php echo $user['profile_picture']; ?>" alt=""></td>
                     <td><?php echo $user['role']; ?></td>
 
                     <td>
                         <form action="../view/update_user_form.php" method="post" style="display: inline;">
                             <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
+                            
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" style="display: inline;">
