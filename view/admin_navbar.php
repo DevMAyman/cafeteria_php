@@ -38,13 +38,13 @@
         <a class="nav-link"  style="color: rgb(143, 154, 33) !important;"  href="./home_view.php">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"  style="color: rgb(143, 154, 33) !important;" href="#">Products</a>
+        <a class="nav-link"  style="color: rgb(143, 154, 33) !important;" href="./product/product_dashboard.php">Products</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"  style="color: rgb(143, 154, 33) !important;" href="#">Users</a>
+        <a class="nav-link"  style="color: rgb(143, 154, 33) !important;" href="./user_management.php">Users</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"  style="color: rgb(143, 154, 33) !important;" href="#">Manual</a>
+        <a class="nav-link"  style="color: rgb(143, 154, 33) !important;" href="./room/room_dashboard.php">Room</a>
       </li>
       <li class="nav-item">
         <a class="nav-link"  style="color: rgb(143, 154, 33) !important;" href="order_view.php">Orders</a>
