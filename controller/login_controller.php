@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit; 
     } else {
         // Connect to the database
-        $database = new Database(DB_HOST, DB_NAME, DB_USER, DB_PASS);
+        $database = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
         $database->connectToDatabase();
         
         // Check if the email and password exist in the database
@@ -45,9 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $statement->execute();
         
         $user = $statement->fetch(PDO::FETCH_ASSOC);
-        
+        var_dump($user);
         if ($user) {
-            
             header("Location: ../view/home_view.php");
             exit;
         } else {

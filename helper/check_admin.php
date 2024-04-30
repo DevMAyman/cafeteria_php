@@ -10,7 +10,7 @@ function isAdmin() {
 
     $isAdmin = false; 
     if ($isLoggedIn) {
-        $database = new Database(DB_HOST, DB_NAME, DB_USER, DB_PASS);
+        $database = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
         $database->connectToDatabase();
         
         $email = $_SESSION['email'];
@@ -34,7 +34,7 @@ function isAdmin() {
 
    
     if ($isLoggedIn) {
-        $database = new Database(DB_HOST, DB_NAME, DB_USER, DB_PASS);
+        $database = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
         $database->connectToDatabase();
         
         $email = $_SESSION['email'];

@@ -58,7 +58,7 @@ class UserModel  {
     public static function  get_all_users() {
     try {
         try {
-            $pdo = new PDO('mysql:host=127.0.0.1;dbname=myusers;charset=utf8', 'root', 'mysql@123');
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'test', 'Shab_jdeed808');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
@@ -81,7 +81,7 @@ class UserModel  {
     public static function delete_user($user_id) {
     try {
          try {
-            $pdo = new PDO('mysql:host=127.0.0.1;dbname=myusers;charset=utf8', 'root', 'mysql@123');
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'test', 'Shab_jdeed808');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
@@ -101,7 +101,7 @@ class UserModel  {
 
   public static function get_user_by_id($user_id) {
     try {
-        $pdo = new PDO('mysql:host=127.0.0.1;dbname=myusers;charset=utf8', 'root', 'mysql@123');
+        $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'test', 'Shab_jdeed808');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
     } catch (PDOException $e) {
         die("Connection failed: " . $e->getMessage());
