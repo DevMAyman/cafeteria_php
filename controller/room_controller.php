@@ -13,7 +13,26 @@ class RoomController
     {
         $this->conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
         $this->conn->connectToDatabase();
+        $this->createRoomTableIfNotExists(); 
     }
+
+    private function createRoomTableIfNotExists()
+    {
+        $query = "CREATE TABLE IF NOT EXISTS rooms (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            room_number INT NOT NULL,
+            room_name VARCHAR(255) NOT NULL,
+            is_busy BOOLEAN DEFAULT FALSE
+        )";
+
+        try {
+            $this->conn->getPdo()->exec($query);
+        } catch (PDOException $e) {
+            echo "Error creating Rooms table: " . $e->getMessage();
+            exit(); 
+        }
+    }
+
 
     public function handleRequest()
     {

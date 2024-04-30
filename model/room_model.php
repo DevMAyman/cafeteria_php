@@ -2,8 +2,8 @@
 
 class Room {
     private $id;
-    private $roomNumber;
-    private $roomName;
+    private $room_number;
+    private $room_name;
     private $isBusy;
     
     public function __construct($roomNumber, $roomName, $isBusy) {
