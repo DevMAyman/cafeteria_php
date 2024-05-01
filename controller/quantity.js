@@ -17,9 +17,9 @@ $(".container1").on("click", ".fa-plus", function () {
     },
     success: function (response) {
       if (response.status === "success") {
-        console.log("Quantity incremented:", response);
+        // console.log("Quantity incremented:", response);
       } else {
-        console.error("Error incrementing quantity:", response);
+        // console.error("Error incrementing quantity:", response);
       }
     },
     error: function () {

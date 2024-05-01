@@ -15,7 +15,7 @@ $(document).ready(function() {
               if (response.status === 'success') {
                   console.log('Order confirmed:', response.message);
               } else {
-                  console.error('Error confirming order:', response);
+                //   console.error('Error confirming order:', response);
               }
           },
           error: function() {

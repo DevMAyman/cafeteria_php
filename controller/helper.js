@@ -30,7 +30,6 @@ $(document).ready(function () {
         notes: orderNotes,
       },
       success: function (response) {
-        console.log("AJAX Success Response:", response); 
         let jsonParts = response.match(/{[^}]*}/g);
         let orderItem = JSON.parse(jsonParts[0]);
         let productId = orderItem.product_id;

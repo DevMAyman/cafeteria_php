@@ -8,7 +8,7 @@ class UserModel
     public static function createUserTable()
     {
         try {
-            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root');
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'test', 'Shab_jdeed808');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
@@ -34,7 +34,7 @@ class UserModel
     public static function createUser($name, $email, $password, $room_no, $ext, $profile_picture, $role)
     {
         try {
-            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root');
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'test', 'Shab_jdeed808');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $pdo->prepare("INSERT INTO users (name, email, password, room_no, ext, profile_picture, role) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -61,7 +61,7 @@ class UserModel
     public static function  get_all_users()
     {
         try {
-            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root');
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'test', 'Shab_jdeed808');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
@@ -83,7 +83,7 @@ class UserModel
     {
         try {
             try {
-                $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root');
+                $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'test', 'Shab_jdeed808');
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
                 die("Connection failed: " . $e->getMessage());
@@ -104,7 +104,7 @@ class UserModel
     public static function get_user_by_id($user_id)
     {
         try {
-            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root');
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'test', 'Shab_jdeed808');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
@@ -126,7 +126,7 @@ class UserModel
     {
         try {
             echo ("sdfsdfdfffff");
-            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root');
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'test', 'Shab_jdeed808');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             // Prepare SQL statement

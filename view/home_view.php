@@ -54,7 +54,7 @@ if (!isset($_SESSION['user'])) {
   }
   ?>
 
-  <!-- <div class="div1">
+  <div class="div1">
     <div class="split-slideshow">
       <div class="slideshow">
         <div class="slider">
@@ -222,7 +222,7 @@ if (!isset($_SESSION['user'])) {
               <label for="rooms">Room:</label>
               <select name="rooms" id="rooms">
                 <?php
-                $Rooms = Room::get_available_rooms($conn->getPdo());
+                $Rooms = Room::get_all_rooms($conn->getPdo());
                 for ($i = 0; $i < count($Rooms); $i++) : ?>
                   <option value="<?php echo $Rooms[$i]['id']; ?>"><?php echo $Rooms[$i]['room_name']; ?></option>
                 <?php endfor; ?>

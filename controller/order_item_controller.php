@@ -2,9 +2,11 @@
 require_once '../helper/db_connection.php';
 require_once '../model/order_item_model.php';
 require_once '../model/order_model.php';
-require_once '../base.php';
+// require_once '../base.php';
 require_once '../helper/table_exist.php';
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 
 class OrderItemController
@@ -121,9 +123,10 @@ class OrderItemController
                     $orderItem->addOrderItem($this->conn->getPdo());
                     var_dump($orderItem);
                 }
-
+                
                 unset($_SESSION['order_items']);
                 echo json_encode(array("status" => "success", "message" => "Order placed successfully."));
+                // header("Location: ../../../view/order_view.php");
             } else {
                 echo json_encode(array("status" => "error", "message" => "Failed to place the order."));
             }

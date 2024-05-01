@@ -20,9 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($key == 'email' && $value != "" && !Validation::validateEmail($value)) {
             $errors[$key] = "$key is not valid.";
         }
-        if ($key == 'password' && $value != "" && !Validation::validateStringLength($value, 8)) {
-            $errors[$key] = "$key must be at least 8 characters long.";
-        }
+        // if ($key == 'password' && $value != "" && !Validation::validateStringLength($value, 8)) {
+        //     $errors[$key] = "$key must be at least 8 characters long.";
+        // }
 
         $formData[$key] = $value;
     }

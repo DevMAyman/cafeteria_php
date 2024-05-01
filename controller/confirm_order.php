@@ -18,6 +18,7 @@ try {
 
     $orderItemController = new OrderItemController();
     $orderItemController->placeOrder($roomId, $notes);
+    // header("Location: ../../../view/order_view.php");
   }
 } catch (Exception $e) {
   echo json_encode(['status' => 'error', 'message' => 'An error occurred: ' . $e->getMessage()]);
