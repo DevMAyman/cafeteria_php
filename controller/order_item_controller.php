@@ -17,8 +17,8 @@ class OrderItemController
     {
         $this->conn = new Database(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
         $this->conn->connectToDatabase();
-        orderItemsTableExist($this->conn->getPdo());
-        ordersTableExist($this->conn->getPdo());
+        // orderItemsTableExist($this->conn->getPdo());
+        // ordersTableExist($this->conn->getPdo());
     }
 
     public function addOrderItem()
@@ -45,8 +45,14 @@ class OrderItemController
             'price' => $product_price
         ];
 
-        $_SESSION['order_items'][] = $order_item;
-        echo $_SESSION['order_item'];
+        // Log session data for debugging
+        error_log(print_r($_SESSION, true)); // Logs the current session data
+
+        $_SESSION['order_items'][] = $order_item; // Add the new order item
+
+        $last_added_item = $_SESSION['order_items'][count($_SESSION['order_items']) - 1];
+        echo json_encode($last_added_item); // Return the last added item as a JSON response
+
 
         echo json_encode(array("status" => "success", "message" => "Item added to order."));
     }
@@ -93,6 +99,7 @@ class OrderItemController
                 $roomId,
                 $userId
             );
+            var_dump($order);
             // $_SESSION['user_id']
             $order_added = $order->addOrder($this->conn->getPdo());
 

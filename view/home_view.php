@@ -54,7 +54,7 @@ if (!isset($_SESSION['user'])) {
   }
   ?>
 
-  <div class="div1">
+  <!-- <div class="div1">
     <div class="split-slideshow">
       <div class="slideshow">
         <div class="slider">
@@ -238,6 +238,7 @@ if (!isset($_SESSION['user'])) {
         </tbody>
       </table>
     </div>
+    <script src='../controller/quantity.js'></script>
     <script src='../controller/confirmation.js'></script>
     <script src='../controller/helper.js'></script>
     <script>
