@@ -1,8 +1,8 @@
 <?php
 require('../model/user_model.php');
 session_start(); // Start the session
-if ($_POST['user_id']) {
-  $_SESSION['user_id'] = $_POST['user_id'];
+if(isset($_POST['user_id'])){
+  $_SESSION['user_id']=$_POST['user_id'];
 }
 if (isset($_SESSION['errors']) && isset($_SESSION['formData'])) {
   $errors = $_SESSION['errors'];
@@ -42,8 +42,8 @@ if (isset($_SESSION['user_id'])) {
 
                       <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                      <form class="mx-1 mx-md-4" method="POST" action="../controller/user_controller_update.php" enctype="multipart/form-data">
-                        <input hidden name="user_id" value="<?php echo $_POST['user_id']; ?>">
+                <form class="mx-1 mx-md-4" method="POST" action="../controller/user_controller_update.php" enctype="multipart/form-data">
+                    <input hidden name="user_id" value="<?php echo $user_id; ?>">
 
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-user fa-lg me-3 fa-fw"></i>
@@ -81,19 +81,28 @@ if (isset($_SESSION['user_id'])) {
                           </div>
                         </div>
 
-                        <div class="d-flex flex-row align-items-center mb-4">
-                          <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                          <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                            <label class="form-label" for="image">Image</label>
-                            <input type="file" id="image" name="image" class="form-control" />
-                            <span class="error-message" style="color:red;"><?php echo isset($errors['image']) ? $errors['image'] : ''; ?></span>
-                          </div>
-                        </div>
-
-
-                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                          <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg">Register</button>
-                        </div>
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                      <label class="form-label" for="image">Image</label>
+                      <input type="file" id="image" name="image" class="form-control" />
+                      <span class="error-message" style="color:red;"><?php echo isset($errors['image']) ? $errors['image'] : ''; ?></span>
+                    </div>
+                  </div>
+                  
+                  <div class="d-flex flex-row align-items-center mb-4">
+    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+    <div data-mdb-input-init class="form-outline flex-fill mb-0">
+        <label class="form-label" for="role">User Role</label>
+        <select id="role" name="role" class="form-select">
+            <option value="client" <?php echo ($user['role'] == 'client') ? 'selected' : ''; ?>>Client</option>
+            <option value="admin" <?php echo ($user['role'] == 'admin') ? 'selected' : ''; ?>>Admin</option>
+        </select>
+    </div>
+</div>
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg">Register</button>
+                  </div>
 
                       </form>
 

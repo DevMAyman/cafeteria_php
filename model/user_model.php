@@ -3,13 +3,11 @@
 // require_once('Cloudinary.php');
 include_once '../base.php';
 
-class UserModel
-{
-    public static function createUserTable()
-    {
-        try {
-            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root');
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+class UserModel  {
+     public static function createUserTable(){
+         try {
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root', 'mysql@123');
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
         }
@@ -34,7 +32,7 @@ class UserModel
     public static function createUser($name, $email, $password, $room_no, $ext, $profile_picture, $role)
     {
         try {
-            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root');
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root', 'mysql@123');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $pdo->prepare("INSERT INTO users (name, email, password, room_no, ext, profile_picture, role) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -61,12 +59,11 @@ class UserModel
     public static function  get_all_users()
     {
         try {
-            try {
-                $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root');
-                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
-                die("Connection failed: " . $e->getMessage());
-            }
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root', 'mysql@123');
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
+        } catch (PDOException $e) {
+            die("Connection failed: " . $e->getMessage());
+        }
 
             $stmt = $pdo->prepare("SELECT * FROM users");
 
@@ -82,15 +79,14 @@ class UserModel
         }
     }
 
-    public static function delete_user($user_id)
-    {
-        try {
-            try {
-                $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root');
-                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
-                die("Connection failed: " . $e->getMessage());
-            }
+    public static function delete_user($user_id) {
+    try {
+         try {
+            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root', 'mysql@123');
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
+        } catch (PDOException $e) {
+            die("Connection failed: " . $e->getMessage());
+        }
 
             $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
 
@@ -104,15 +100,14 @@ class UserModel
         }
     }
 
-    public static function get_user_by_id($user_id)
-    {
-        try {
-            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root');
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die("Connection failed: " . $e->getMessage());
-        }
-        $stmt = $pdo->prepare('SELECT * FROM users WHERE id = :user_id');
+  public static function get_user_by_id($user_id) {
+    try {
+        $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root', 'mysql@123');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
+    } catch (PDOException $e) {
+        die("Connection failed: " . $e->getMessage());
+    }
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE id = :user_id');
 
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -125,12 +120,11 @@ class UserModel
 
 
 
-    public static function updateUser($user_id, $name, $email, $room_no, $ext, $profile_picture, $role)
-    {
-        try {
-            echo ("sdfsdfdfffff");
-            $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root');
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+public static function updateUser($user_id, $name, $email, $room_no, $ext, $profile_picture, $role) {
+    try {
+        echo("sdfsdfdfffff");
+        $pdo = new PDO('mysql:host=127.0.0.1;dbname=cafeteria;charset=utf8', 'root', 'mysql@123');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             // Prepare SQL statement
             $stmt = $pdo->prepare("UPDATE users SET name = ?, email = ?, room_no = ?, ext = ?, profile_picture = ?, role = ? WHERE id = ?");

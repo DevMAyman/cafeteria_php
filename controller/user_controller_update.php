@@ -74,17 +74,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $room_no = $_POST['room'];
         $ext = $_POST['ext'];
         $profile_picture = isset($uploaded_file) ? $uploaded_file : ''; 
-        $role = 'client'; 
+        $role = $_POST['role']; 
         
         if (UserModel::updateUser($user_id, $name, $email, $room_no, $ext, $profile_picture, $role)) {
             header("Location: ../view/user_management.php");
             exit;
         } else {
-            // If update fails, redirect back to update form with user_id
             $_SESSION['errors'] = ["Error updating user."];
             $_SESSION['formData'] = $formData; // Preserve form data
             $_SESSION['user_id'] = $user_id; // Preserve user_id
-            header("Location: ../view/update_user_form.php");
+            header("Location: ../view/user_management.php");
             exit;
         }
     }

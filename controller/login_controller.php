@@ -1,5 +1,5 @@
 <?php
-    session_start();
+session_start();
   
 include '../helper/db_connection.php';
 require_once('../helper/validation.php');
@@ -54,7 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (password_verify($password, $user['password'])) {
                     $_SESSION['user'] = $user;
                     header("Location: ../view/home_view.php");
-                    echo"okay";
                     exit;
                 } else {
                     $errors['login'] = "Invalid email or password.";
