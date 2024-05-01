@@ -6,9 +6,6 @@ if (session_status() == PHP_SESSION_NONE) {
 if (isset($_SESSION['errors']) && isset($_SESSION['formData'])) {
     $errors = $_SESSION['errors'];
     $formData = $_SESSION['formData'];
-
-
-
     unset($_SESSION['errors']);
     unset($_SESSION['formData']);
 }

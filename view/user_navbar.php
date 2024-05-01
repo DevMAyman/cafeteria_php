@@ -1,6 +1,4 @@
-
-
-<nav  style=" border-bottom: 1px solid #fff;
+<nav style=" border-bottom: 1px solid #fff;
       background-color: rgba(0, 0, 0, 0);
       font-family: 'Shadows Into Light', cursive;
       font-size:25px;
@@ -10,21 +8,22 @@
       width: 100%;  
       z-index: 9999;" class="navbar navbar-expand-lg navbar-light">
 
-  <a  style ="color: rgb(143, 154, 33) !important;  
+  <a style="color: rgb(143, 154, 33) !important;  
       text-transform: uppercase;
       font-size:25px;
-      font-family: 'Shadows Into Light', cursive;"  class="navbar-brand" href="#"><i class="fas fa-coffee"></i>Your Cafe</a>
+      font-family: 'Shadows Into Light', cursive;" class="navbar-brand" href="#"><i class="fas fa-coffee"></i>Your Cafe</a>
 
-<?php
-//for navbar
- require_once('../helper/check_admin.php');
+  <?php
+  //for navbar
+  require_once('../helper/check_admin.php');
 
-   $image = access_image();
-   
-?>
+  $image = access_image();
+  // var_dump($_SESSION["user"]);
+  $user = $_SESSION["user"];
+  ?>
 
   <div class="ml-auto">
-    <img src="<?php echo $image; ?>" alt="<?php echo $image; ?>" style="width: 50px; height: 50px; border-radius: 50%;">
+    <img src="<?php echo $user['profile_picture']; ?>" alt="<?php echo $image; ?>" style="width: 50px; height: 50px; border-radius: 50%;">
   </div>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -33,17 +32,16 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" style="color:rgb(143, 154, 33) !important;"  href="./home_view.php">Home</a>
+        <a class="nav-link" style="color:rgb(143, 154, 33) !important;" href="./home_view.php">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" style="color:rgb(143, 154, 33) !important;"  href="./order_view.php">My Orders</a>
+        <a class="nav-link" style="color:rgb(143, 154, 33) !important;" href="./order_view.php">My Orders</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" style="color:rgb(143, 154, 33) !important;" href="../controller/logout.php">Logout</a>
       </li>
     </ul>
-   
-  
+
+
   </div>
 </nav>
-
-
-
- 

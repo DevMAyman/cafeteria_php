@@ -42,19 +42,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     
-    // Validate image
     if (isset($_FILES['image'])) {
-        $file_name = $_FILES['image']['name'];
-        $file_type = $_FILES['image']['type'];
+    $file_name = $_FILES['image']['name'];
+    $file_type = $_FILES['image']['type'];
+    $file_tmp = $_FILES['image']['tmp_name']; 
 
-        if (empty($file_name)) {
-            $errors['image'] = "Image is required.";
-        } else {
-            if (!Validation::isImageFile($file_type)) {
-                $errors['image'] = "Image must be a valid image file.";
+    if (empty($file_name)) {
+        $errors['image'] = "Image is required.";
+    } elseif (!Validation::isImageFile($file_type)) {
+        $errors['image'] = "Image must be a valid image file.";
+    } else {
+        try {
+            $upload_path = '../assets/images/';
+            $uploaded_file = $upload_path . $file_name;
+
+            if (!file_exists($upload_path)) {
+                mkdir($upload_path, 0777, true);
             }
+
+            if (!move_uploaded_file($file_tmp, $uploaded_file)) {
+                $errors['image'] = "Failed to upload image.";
+            }
+        } catch (Exception $e) {
+            $errors['image'] = "Error uploading image: " . $e->getMessage();
         }
     }
+}
 
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
@@ -63,27 +76,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ../view/user_view.php");
         exit; 
     } else {
-        // Create user table if not exists
         UserModel::createUserTable();
         
-        // Extract form data
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
         $room_no = $_POST['room'];
         $ext = $_POST['ext'];
-        $profile_picture = ''; // Not sure where you're getting this from in the form
-        $role = 'client'; // Assuming a default role
+        $profile_picture = $uploaded_file;
+        $role = 'client'; 
         
-        // Create user
-        if (UserModel::createUser($name, $email, $password, $room_no, $ext, $profile_picture, $role)) {
-            // User created successfully, redirect to another page
-            // header("Location: ../view/success.php");
+        if (UserModel::createUser($name, $email, $password, $room_no, $ext, $profile_picture, $role, $profile_picture )) {
             header("Location: ../view/user_management.php");
 
             exit;
         } else {
-            // User creation failed, handle accordingly
             $_SESSION['errors'] = ["Error creating user."];
             header("Location: ../view/user_view.php");
             exit;
