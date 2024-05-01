@@ -47,7 +47,7 @@
          <a class="nav-link" style="color: rgb(143, 154, 33) !important;" href="./room/room_dashboard.php">Room</a>
        </li>
        <li class="nav-item">
-         <a class="nav-link" style="color: rgb(143, 154, 33) !important;" href="order_view.php">Orders</a>
+         <a class="nav-link" style="color: rgb(143, 154, 33) !important;" href="../view/order/view_users_orders.php">Orders</a>
        </li>
        <li class="nav-item">
          <a class="nav-link" style="color: rgb(143, 154, 33) !important;" href="#">Checks</a>
