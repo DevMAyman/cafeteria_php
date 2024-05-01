@@ -5,8 +5,12 @@ require_once '../model/order_model.php';
 require_once '../base.php';
 require_once '../helper/table_exist.php';
 
+
+
 class OrderItemController
 {
+
+
     private $conn;
 
     public function __construct()
@@ -67,10 +71,13 @@ class OrderItemController
 
     public function placeOrder($roomId, $notes)
     {
+        $user = $_SESSION["user"];
+        // var_dump([$user['user_id']]);
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-
+        $user = $_SESSION["user"];
+        $userId = $user["id"];
         if (isset($_SESSION['order_items'])) {
             $totals = $this->calculateTotalAmountAndQuantity($_SESSION['order_items']);
 
@@ -84,7 +91,7 @@ class OrderItemController
                 date("Y-m-d H:i:s"),
                 $total_quantity,
                 $roomId,
-                1 
+                $userId
             );
             // $_SESSION['user_id']
             $order_added = $order->addOrder($this->conn->getPdo());
